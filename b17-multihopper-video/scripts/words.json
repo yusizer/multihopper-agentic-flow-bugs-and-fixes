@@ -1,0 +1,2287 @@
+{
+  "audio_duration": 150.073,
+  "words": [
+    {
+      "word": "Break",
+      "start": 0.0,
+      "end": 0.28
+    },
+    {
+      "word": "it",
+      "start": 0.28,
+      "end": 0.44
+    },
+    {
+      "word": "before",
+      "start": 0.44,
+      "end": 0.68
+    },
+    {
+      "word": "users",
+      "start": 0.68,
+      "end": 1.06
+    },
+    {
+      "word": "do.",
+      "start": 1.06,
+      "end": 1.42
+    },
+    {
+      "word": "I",
+      "start": 2.48,
+      "end": 2.72
+    },
+    {
+      "word": "responsibly",
+      "start": 2.72,
+      "end": 3.44
+    },
+    {
+      "word": "tested",
+      "start": 3.44,
+      "end": 3.78
+    },
+    {
+      "word": "MultiHopper's",
+      "start": 3.78,
+      "end": 4.68
+    },
+    {
+      "word": "agentic",
+      "start": 4.68,
+      "end": 5.28
+    },
+    {
+      "word": "transfer",
+      "start": 5.28,
+      "end": 5.62
+    },
+    {
+      "word": "flow",
+      "start": 5.62,
+      "end": 6.02
+    },
+    {
+      "word": "on",
+      "start": 6.02,
+      "end": 6.3
+    },
+    {
+      "word": "DevNet",
+      "start": 6.3,
+      "end": 6.82
+    },
+    {
+      "word": "a",
+      "start": 7.3,
+      "end": 7.46
+    },
+    {
+      "word": "reproducible",
+      "start": 7.46,
+      "end": 8.1
+    },
+    {
+      "word": "Python",
+      "start": 8.1,
+      "end": 8.5
+    },
+    {
+      "word": "harness",
+      "start": 8.5,
+      "end": 9.0
+    },
+    {
+      "word": "18",
+      "start": 9.5,
+      "end": 9.86
+    },
+    {
+      "word": "unique",
+      "start": 9.86,
+      "end": 10.28
+    },
+    {
+      "word": "findings",
+      "start": 10.28,
+      "end": 10.72
+    },
+    {
+      "word": "real",
+      "start": 11.3,
+      "end": 11.7
+    },
+    {
+      "word": "on",
+      "start": 11.7,
+      "end": 12.1
+    },
+    {
+      "word": "-chain",
+      "start": 12.1,
+      "end": 12.36
+    },
+    {
+      "word": "evidence.",
+      "start": 12.36,
+      "end": 12.86
+    },
+    {
+      "word": "The",
+      "start": 14.09,
+      "end": 14.27
+    },
+    {
+      "word": "documented",
+      "start": 14.27,
+      "end": 14.75
+    },
+    {
+      "word": "agent",
+      "start": 14.75,
+      "end": 15.29
+    },
+    {
+      "word": "flow",
+      "start": 15.29,
+      "end": 15.69
+    },
+    {
+      "word": "created",
+      "start": 15.69,
+      "end": 16.21
+    },
+    {
+      "word": "transfer",
+      "start": 16.21,
+      "end": 16.75
+    },
+    {
+      "word": "prepare",
+      "start": 17.33,
+      "end": 17.69
+    },
+    {
+      "word": "the",
+      "start": 17.69,
+      "end": 17.91
+    },
+    {
+      "word": "bundle",
+      "start": 17.91,
+      "end": 18.21
+    },
+    {
+      "word": "sign",
+      "start": 18.63,
+      "end": 19.05
+    },
+    {
+      "word": "and",
+      "start": 19.05,
+      "end": 19.29
+    },
+    {
+      "word": "broadcast",
+      "start": 19.29,
+      "end": 19.77
+    },
+    {
+      "word": "in",
+      "start": 19.77,
+      "end": 20.21
+    },
+    {
+      "word": "strict",
+      "start": 20.21,
+      "end": 20.57
+    },
+    {
+      "word": "order",
+      "start": 20.57,
+      "end": 20.97
+    },
+    {
+      "word": "confirm",
+      "start": 21.37,
+      "end": 21.83
+    },
+    {
+      "word": "broadcast",
+      "start": 21.83,
+      "end": 22.47
+    },
+    {
+      "word": "twice",
+      "start": 22.47,
+      "end": 23.03
+    },
+    {
+      "word": "then",
+      "start": 23.65,
+      "end": 23.99
+    },
+    {
+      "word": "poll",
+      "start": 23.99,
+      "end": 24.35
+    },
+    {
+      "word": "for",
+      "start": 24.35,
+      "end": 24.65
+    },
+    {
+      "word": "a",
+      "start": 24.65,
+      "end": 24.83
+    },
+    {
+      "word": "terminal",
+      "start": 24.83,
+      "end": 25.13
+    },
+    {
+      "word": "state.",
+      "start": 25.13,
+      "end": 25.59
+    },
+    {
+      "word": "On",
+      "start": 26.26,
+      "end": 26.66
+    },
+    {
+      "word": "the",
+      "start": 26.66,
+      "end": 26.82
+    },
+    {
+      "word": "happy",
+      "start": 26.82,
+      "end": 27.06
+    },
+    {
+      "word": "path",
+      "start": 27.06,
+      "end": 27.42
+    },
+    {
+      "word": "transfer",
+      "start": 27.96,
+      "end": 28.4
+    },
+    {
+      "word": "476",
+      "start": 28.4,
+      "end": 29.72
+    },
+    {
+      "word": "deploys",
+      "start": 29.72,
+      "end": 30.24
+    },
+    {
+      "word": "cleanly",
+      "start": 30.24,
+      "end": 30.92
+    },
+    {
+      "word": "keeper",
+      "start": 31.32,
+      "end": 31.6
+    },
+    {
+      "word": "funding",
+      "start": 31.6,
+      "end": 32.06
+    },
+    {
+      "word": "two",
+      "start": 32.62,
+      "end": 32.84
+    },
+    {
+      "word": "route",
+      "start": 32.84,
+      "end": 33.18
+    },
+    {
+      "word": "in",
+      "start": 33.18,
+      "end": 33.48
+    },
+    {
+      "word": "it",
+      "start": 33.48,
+      "end": 33.62
+    },
+    {
+      "word": "orchestrator",
+      "start": 34.0,
+      "end": 34.62
+    },
+    {
+      "word": "and",
+      "start": 35.14,
+      "end": 35.26
+    },
+    {
+      "word": "session",
+      "start": 35.26,
+      "end": 35.62
+    },
+    {
+      "word": "transactions",
+      "start": 35.62,
+      "end": 36.34
+    },
+    {
+      "word": "all",
+      "start": 36.34,
+      "end": 36.9
+    },
+    {
+      "word": "confirm",
+      "start": 36.9,
+      "end": 37.44
+    },
+    {
+      "word": "on",
+      "start": 37.44,
+      "end": 37.88
+    },
+    {
+      "word": "Solana",
+      "start": 37.88,
+      "end": 38.34
+    },
+    {
+      "word": "DevNet",
+      "start": 38.34,
+      "end": 38.82
+    },
+    {
+      "word": "five",
+      "start": 39.36,
+      "end": 39.72
+    },
+    {
+      "word": "real",
+      "start": 39.72,
+      "end": 40.04
+    },
+    {
+      "word": "signatures",
+      "start": 40.04,
+      "end": 40.6
+    },
+    {
+      "word": "submitted",
+      "start": 40.6,
+      "end": 41.18
+    },
+    {
+      "word": "in",
+      "start": 41.18,
+      "end": 41.42
+    },
+    {
+      "word": "order",
+      "start": 41.42,
+      "end": 41.72
+    },
+    {
+      "word": "then",
+      "start": 41.94,
+      "end": 42.28
+    },
+    {
+      "word": "it",
+      "start": 42.28,
+      "end": 42.42
+    },
+    {
+      "word": "stalls.",
+      "start": 42.42,
+      "end": 42.84
+    },
+    {
+      "word": "Get",
+      "start": 43.92,
+      "end": 44.14
+    },
+    {
+      "word": "transfers",
+      "start": 44.14,
+      "end": 44.7
+    },
+    {
+      "word": "476",
+      "start": 44.7,
+      "end": 46.06
+    },
+    {
+      "word": "status",
+      "start": 46.38,
+      "end": 46.78
+    },
+    {
+      "word": "active",
+      "start": 46.78,
+      "end": 47.28
+    },
+    {
+      "word": "phase",
+      "start": 47.7,
+      "end": 47.94
+    },
+    {
+      "word": "executing",
+      "start": 47.94,
+      "end": 48.58
+    },
+    {
+      "word": "zero",
+      "start": 49.12,
+      "end": 49.44
+    },
+    {
+      "word": "of",
+      "start": 49.44,
+      "end": 49.72
+    },
+    {
+      "word": "five",
+      "start": 49.72,
+      "end": 50.02
+    },
+    {
+      "word": "hops",
+      "start": 50.02,
+      "end": 50.46
+    },
+    {
+      "word": "no",
+      "start": 50.86,
+      "end": 51.06
+    },
+    {
+      "word": "last",
+      "start": 51.06,
+      "end": 51.46
+    },
+    {
+      "word": "error",
+      "start": 51.46,
+      "end": 51.84
+    },
+    {
+      "word": "no",
+      "start": 52.22,
+      "end": 52.44
+    },
+    {
+      "word": "recovery",
+      "start": 52.44,
+      "end": 52.92
+    },
+    {
+      "word": "and",
+      "start": 53.3,
+      "end": 53.4
+    },
+    {
+      "word": "the",
+      "start": 53.4,
+      "end": 53.5
+    },
+    {
+      "word": "expiry",
+      "start": 53.5,
+      "end": 54.08
+    },
+    {
+      "word": "has",
+      "start": 54.08,
+      "end": 54.38
+    },
+    {
+      "word": "already",
+      "start": 54.38,
+      "end": 54.66
+    },
+    {
+      "word": "passed.",
+      "start": 54.66,
+      "end": 55.02
+    },
+    {
+      "word": "Recovery",
+      "start": 55.72,
+      "end": 56.32
+    },
+    {
+      "word": "eventually",
+      "start": 56.32,
+      "end": 56.8
+    },
+    {
+      "word": "says",
+      "start": 56.8,
+      "end": 57.18
+    },
+    {
+      "word": "can",
+      "start": 57.18,
+      "end": 57.52
+    },
+    {
+      "word": "rescue",
+      "start": 57.52,
+      "end": 57.92
+    },
+    {
+      "word": "true",
+      "start": 57.92,
+      "end": 58.32
+    },
+    {
+      "word": "with",
+      "start": 58.78,
+      "end": 58.94
+    },
+    {
+      "word": "111",
+      "start": 58.94,
+      "end": 59.7
+    },
+    {
+      "word": "million",
+      "start": 59.7,
+      "end": 60.12
+    },
+    {
+      "word": "lamports",
+      "start": 60.12,
+      "end": 60.72
+    },
+    {
+      "word": "rescueable.",
+      "start": 60.72,
+      "end": 61.44
+    },
+    {
+      "word": "I",
+      "start": 61.96,
+      "end": 62.08
+    },
+    {
+      "word": "sign",
+      "start": 62.08,
+      "end": 62.38
+    },
+    {
+      "word": "the",
+      "start": 62.38,
+      "end": 62.54
+    },
+    {
+      "word": "rescue",
+      "start": 62.54,
+      "end": 62.82
+    },
+    {
+      "word": "transaction",
+      "start": 62.82,
+      "end": 63.44
+    },
+    {
+      "word": "it",
+      "start": 63.7,
+      "end": 63.78
+    },
+    {
+      "word": "confirms",
+      "start": 63.78,
+      "end": 64.2
+    },
+    {
+      "word": "on",
+      "start": 64.2,
+      "end": 64.48
+    },
+    {
+      "word": "chain",
+      "start": 64.48,
+      "end": 64.8
+    },
+    {
+      "word": "then",
+      "start": 65.36,
+      "end": 65.6
+    },
+    {
+      "word": "rescue",
+      "start": 65.6,
+      "end": 66.04
+    },
+    {
+      "word": "confirm",
+      "start": 66.04,
+      "end": 66.38
+    },
+    {
+      "word": "fails",
+      "start": 66.38,
+      "end": 66.94
+    },
+    {
+      "word": "MH083",
+      "start": 67.62,
+      "end": 69.42
+    },
+    {
+      "word": "custom",
+      "start": 70.04,
+      "end": 70.38
+    },
+    {
+      "word": "3012",
+      "start": 70.38,
+      "end": 71.62
+    },
+    {
+      "word": "a",
+      "start": 72.28,
+      "end": 72.42
+    },
+    {
+      "word": "false",
+      "start": 72.42,
+      "end": 72.7
+    },
+    {
+      "word": "promise.",
+      "start": 72.7,
+      "end": 73.26
+    },
+    {
+      "word": "Transfer",
+      "start": 74.19,
+      "end": 74.73
+    },
+    {
+      "word": "479",
+      "start": 74.73,
+      "end": 75.63
+    },
+    {
+      "word": "is",
+      "start": 75.63,
+      "end": 75.83
+    },
+    {
+      "word": "worse.",
+      "start": 75.83,
+      "end": 76.05
+    },
+    {
+      "word": "All",
+      "start": 76.57,
+      "end": 76.83
+    },
+    {
+      "word": "four",
+      "start": 76.83,
+      "end": 77.19
+    },
+    {
+      "word": "hops",
+      "start": 77.19,
+      "end": 77.53
+    },
+    {
+      "word": "complete",
+      "start": 77.53,
+      "end": 77.99
+    },
+    {
+      "word": "yet",
+      "start": 78.19,
+      "end": 78.31
+    },
+    {
+      "word": "status",
+      "start": 78.31,
+      "end": 78.71
+    },
+    {
+      "word": "stays",
+      "start": 78.71,
+      "end": 79.03
+    },
+    {
+      "word": "active",
+      "start": 79.03,
+      "end": 79.59
+    },
+    {
+      "word": "phase",
+      "start": 80.07,
+      "end": 80.37
+    },
+    {
+      "word": "executing",
+      "start": 80.37,
+      "end": 81.05
+    },
+    {
+      "word": "completed",
+      "start": 81.05,
+      "end": 81.63
+    },
+    {
+      "word": "at",
+      "start": 81.63,
+      "end": 81.87
+    },
+    {
+      "word": "null",
+      "start": 81.87,
+      "end": 82.09
+    },
+    {
+      "word": "it",
+      "start": 82.63,
+      "end": 82.77
+    },
+    {
+      "word": "never",
+      "start": 82.77,
+      "end": 82.97
+    },
+    {
+      "word": "settles.",
+      "start": 82.97,
+      "end": 83.41
+    },
+    {
+      "word": "No",
+      "start": 84.12,
+      "end": 84.58
+    },
+    {
+      "word": "unwrap",
+      "start": 84.58,
+      "end": 85.26
+    },
+    {
+      "word": "endpoint",
+      "start": 85.26,
+      "end": 85.72
+    },
+    {
+      "word": "exists.",
+      "start": 85.72,
+      "end": 86.38
+    },
+    {
+      "word": "The",
+      "start": 87.39,
+      "end": 87.65
+    },
+    {
+      "word": "webhook",
+      "start": 87.65,
+      "end": 88.09
+    },
+    {
+      "word": "verifier",
+      "start": 88.09,
+      "end": 88.73
+    },
+    {
+      "word": "in",
+      "start": 88.73,
+      "end": 88.97
+    },
+    {
+      "word": "the",
+      "start": 88.97,
+      "end": 89.05
+    },
+    {
+      "word": "docs",
+      "start": 89.05,
+      "end": 89.33
+    },
+    {
+      "word": "is",
+      "start": 89.33,
+      "end": 89.59
+    },
+    {
+      "word": "broken.",
+      "start": 89.59,
+      "end": 89.97
+    },
+    {
+      "word": "The",
+      "start": 90.55,
+      "end": 90.69
+    },
+    {
+      "word": "server",
+      "start": 90.69,
+      "end": 90.99
+    },
+    {
+      "word": "signs",
+      "start": 90.99,
+      "end": 91.47
+    },
+    {
+      "word": "the",
+      "start": 91.47,
+      "end": 91.67
+    },
+    {
+      "word": "raw",
+      "start": 91.67,
+      "end": 91.91
+    },
+    {
+      "word": "body.",
+      "start": 91.91,
+      "end": 92.31
+    },
+    {
+      "word": "The",
+      "start": 92.93,
+      "end": 93.05
+    },
+    {
+      "word": "example",
+      "start": 93.05,
+      "end": 93.39
+    },
+    {
+      "word": "verifies",
+      "start": 93.39,
+      "end": 94.03
+    },
+    {
+      "word": "parsed",
+      "start": 94.03,
+      "end": 94.61
+    },
+    {
+      "word": "JSON",
+      "start": 94.61,
+      "end": 95.01
+    },
+    {
+      "word": "and",
+      "start": 95.01,
+      "end": 95.39
+    },
+    {
+      "word": "mismatches.",
+      "start": 95.39,
+      "end": 96.19
+    },
+    {
+      "word": "The",
+      "start": 96.83,
+      "end": 96.95
+    },
+    {
+      "word": "header",
+      "start": 96.95,
+      "end": 97.21
+    },
+    {
+      "word": "is",
+      "start": 97.21,
+      "end": 97.57
+    },
+    {
+      "word": "x",
+      "start": 97.57,
+      "end": 98.03
+    },
+    {
+      "word": "-m",
+      "start": 98.03,
+      "end": 98.87
+    },
+    {
+      "word": "-h",
+      "start": 98.87,
+      "end": 99.83
+    },
+    {
+      "word": "-signature",
+      "start": 99.83,
+      "end": 100.95
+    },
+    {
+      "word": "not",
+      "start": 101.27,
+      "end": 101.49
+    },
+    {
+      "word": "x",
+      "start": 101.49,
+      "end": 102.01
+    },
+    {
+      "word": "-multihopper",
+      "start": 102.01,
+      "end": 103.31
+    },
+    {
+      "word": "-signature.",
+      "start": 103.31,
+      "end": 104.39
+    },
+    {
+      "word": "Intermittent",
+      "start": 105.1,
+      "end": 105.82
+    },
+    {
+      "word": "500s",
+      "start": 105.82,
+      "end": 106.7
+    },
+    {
+      "word": "on",
+      "start": 106.7,
+      "end": 106.82
+    },
+    {
+      "word": "every",
+      "start": 106.82,
+      "end": 107.3
+    },
+    {
+      "word": "get",
+      "start": 107.3,
+      "end": 107.62
+    },
+    {
+      "word": "endpoint",
+      "start": 107.62,
+      "end": 108.1
+    },
+    {
+      "word": "leak",
+      "start": 108.1,
+      "end": 108.52
+    },
+    {
+      "word": "the",
+      "start": 108.74,
+      "end": 108.8
+    },
+    {
+      "word": "internal",
+      "start": 108.8,
+      "end": 109.22
+    },
+    {
+      "word": "SQL",
+      "start": 109.22,
+      "end": 110.04
+    },
+    {
+      "word": "query",
+      "start": 110.04,
+      "end": 110.62
+    },
+    {
+      "word": "API",
+      "start": 111.26,
+      "end": 111.54
+    },
+    {
+      "word": "keys",
+      "start": 111.54,
+      "end": 112.08
+    },
+    {
+      "word": "integrations",
+      "start": 112.62,
+      "end": 113.36
+    },
+    {
+      "word": "webhook",
+      "start": 113.36,
+      "end": 114.4
+    },
+    {
+      "word": "URLs",
+      "start": 114.4,
+      "end": 115.08
+    },
+    {
+      "word": "and",
+      "start": 115.9,
+      "end": 116.08
+    },
+    {
+      "word": "information",
+      "start": 116.08,
+      "end": 116.6
+    },
+    {
+      "word": "disclosure",
+      "start": 116.6,
+      "end": 117.28
+    },
+    {
+      "word": "on",
+      "start": 117.28,
+      "end": 117.66
+    },
+    {
+      "word": "top",
+      "start": 117.66,
+      "end": 118.0
+    },
+    {
+      "word": "of",
+      "start": 118.0,
+      "end": 118.26
+    },
+    {
+      "word": "a",
+      "start": 118.26,
+      "end": 118.4
+    },
+    {
+      "word": "reliability",
+      "start": 118.4,
+      "end": 118.82
+    },
+    {
+      "word": "bug.",
+      "start": 118.82,
+      "end": 119.42
+    },
+    {
+      "word": "Create",
+      "start": 120.16,
+      "end": 120.62
+    },
+    {
+      "word": "accepts",
+      "start": 120.62,
+      "end": 121.04
+    },
+    {
+      "word": "amount",
+      "start": 121.04,
+      "end": 121.32
+    },
+    {
+      "word": "raw",
+      "start": 121.32,
+      "end": 121.64
+    },
+    {
+      "word": "for",
+      "start": 121.64,
+      "end": 121.86
+    },
+    {
+      "word": "0",
+      "start": 121.86,
+      "end": 122.22
+    },
+    {
+      "word": ".1",
+      "start": 122.22,
+      "end": 122.98
+    },
+    {
+      "word": "sole",
+      "start": 122.98,
+      "end": 123.34
+    },
+    {
+      "word": "alongside",
+      "start": 123.34,
+      "end": 123.82
+    },
+    {
+      "word": "amount",
+      "start": 123.82,
+      "end": 124.2
+    },
+    {
+      "word": "tokens",
+      "start": 124.2,
+      "end": 124.62
+    },
+    {
+      "word": "5",
+      "start": 124.62,
+      "end": 124.96
+    },
+    {
+      "word": ".0",
+      "start": 124.96,
+      "end": 125.64
+    },
+    {
+      "word": "inconsistent",
+      "start": 126.2,
+      "end": 126.82
+    },
+    {
+      "word": "inputs",
+      "start": 126.82,
+      "end": 127.58
+    },
+    {
+      "word": "no",
+      "start": 128.14,
+      "end": 128.28
+    },
+    {
+      "word": "validation",
+      "start": 128.28,
+      "end": 128.78
+    },
+    {
+      "word": "status",
+      "start": 129.4,
+      "end": 129.74
+    },
+    {
+      "word": "200",
+      "start": 129.74,
+      "end": 130.14
+    },
+    {
+      "word": "18",
+      "start": 130.78,
+      "end": 131.24
+    },
+    {
+      "word": "findings",
+      "start": 131.24,
+      "end": 131.72
+    },
+    {
+      "word": "one",
+      "start": 132.44,
+      "end": 132.7
+    },
+    {
+      "word": "critical",
+      "start": 132.7,
+      "end": 133.08
+    },
+    {
+      "word": "five",
+      "start": 133.58,
+      "end": 133.92
+    },
+    {
+      "word": "high",
+      "start": 133.92,
+      "end": 134.34
+    },
+    {
+      "word": "eight",
+      "start": 134.88,
+      "end": 135.12
+    },
+    {
+      "word": "medium",
+      "start": 135.12,
+      "end": 135.52
+    },
+    {
+      "word": "four",
+      "start": 135.94,
+      "end": 136.26
+    },
+    {
+      "word": "low",
+      "start": 136.26,
+      "end": 136.64
+    },
+    {
+      "word": "all",
+      "start": 137.08,
+      "end": 137.34
+    },
+    {
+      "word": "reproduced",
+      "start": 137.34,
+      "end": 138.02
+    },
+    {
+      "word": "on",
+      "start": 138.02,
+      "end": 138.18
+    },
+    {
+      "word": "DevNet",
+      "start": 138.18,
+      "end": 138.7
+    },
+    {
+      "word": "all",
+      "start": 139.16,
+      "end": 139.4
+    },
+    {
+      "word": "unique",
+      "start": 139.4,
+      "end": 139.76
+    },
+    {
+      "word": "against",
+      "start": 139.76,
+      "end": 140.12
+    },
+    {
+      "word": "six",
+      "start": 140.12,
+      "end": 140.5
+    },
+    {
+      "word": "public",
+      "start": 140.5,
+      "end": 140.94
+    },
+    {
+      "word": "competitors.",
+      "start": 140.94,
+      "end": 141.52
+    },
+    {
+      "word": "Legit",
+      "start": 142.6,
+      "end": 143.1
+    },
+    {
+      "word": "DevNet",
+      "start": 143.1,
+      "end": 143.56
+    },
+    {
+      "word": "testing",
+      "start": 143.56,
+      "end": 144.02
+    },
+    {
+      "word": "a",
+      "start": 144.5,
+      "end": 144.6
+    },
+    {
+      "word": "reproducible",
+      "start": 144.6,
+      "end": 145.28
+    },
+    {
+      "word": "harness",
+      "start": 145.28,
+      "end": 145.64
+    },
+    {
+      "word": "and",
+      "start": 146.26,
+      "end": 146.36
+    },
+    {
+      "word": "a",
+      "start": 146.36,
+      "end": 146.46
+    },
+    {
+      "word": "full",
+      "start": 146.46,
+      "end": 146.66
+    },
+    {
+      "word": "report.",
+      "start": 146.66,
+      "end": 147.14
+    },
+    {
+      "word": "Break",
+      "start": 147.88,
+      "end": 148.18
+    },
+    {
+      "word": "it",
+      "start": 148.18,
+      "end": 148.42
+    },
+    {
+      "word": "before",
+      "start": 148.42,
+      "end": 148.68
+    },
+    {
+      "word": "users",
+      "start": 148.68,
+      "end": 149.22
+    },
+    {
+      "word": "do.",
+      "start": 149.22,
+      "end": 149.56
+    }
+  ],
+  "chunks": [
+    {
+      "start": 0.0,
+      "dur": 0.44,
+      "text": "Break it"
+    },
+    {
+      "start": 0.44,
+      "dur": 0.62,
+      "text": "before users"
+    },
+    {
+      "start": 1.06,
+      "dur": 0.36,
+      "text": "do."
+    },
+    {
+      "start": 2.48,
+      "dur": 0.96,
+      "text": "I responsibly"
+    },
+    {
+      "start": 3.44,
+      "dur": 0.34,
+      "text": "tested"
+    },
+    {
+      "start": 3.78,
+      "dur": 0.9,
+      "text": "MultiHopper's"
+    },
+    {
+      "start": 4.68,
+      "dur": 0.6,
+      "text": "agentic"
+    },
+    {
+      "start": 5.28,
+      "dur": 0.34,
+      "text": "transfer"
+    },
+    {
+      "start": 5.62,
+      "dur": 0.68,
+      "text": "flow on"
+    },
+    {
+      "start": 6.3,
+      "dur": 0.52,
+      "text": "DevNet"
+    },
+    {
+      "start": 7.3,
+      "dur": 0.8,
+      "text": "a reproducible"
+    },
+    {
+      "start": 8.1,
+      "dur": 0.4,
+      "text": "Python"
+    },
+    {
+      "start": 8.5,
+      "dur": 0.5,
+      "text": "harness"
+    },
+    {
+      "start": 9.5,
+      "dur": 0.36,
+      "text": "18"
+    },
+    {
+      "start": 9.86,
+      "dur": 0.42,
+      "text": "unique"
+    },
+    {
+      "start": 10.28,
+      "dur": 0.44,
+      "text": "findings"
+    },
+    {
+      "start": 11.3,
+      "dur": 0.8,
+      "text": "real on"
+    },
+    {
+      "start": 12.1,
+      "dur": 0.76,
+      "text": "-chain evidence."
+    },
+    {
+      "start": 14.09,
+      "dur": 0.66,
+      "text": "The documented"
+    },
+    {
+      "start": 14.75,
+      "dur": 0.54,
+      "text": "agent"
+    },
+    {
+      "start": 15.29,
+      "dur": 0.4,
+      "text": "flow"
+    },
+    {
+      "start": 15.69,
+      "dur": 0.52,
+      "text": "created"
+    },
+    {
+      "start": 16.21,
+      "dur": 0.54,
+      "text": "transfer"
+    },
+    {
+      "start": 17.33,
+      "dur": 0.58,
+      "text": "prepare the"
+    },
+    {
+      "start": 17.91,
+      "dur": 0.3,
+      "text": "bundle"
+    },
+    {
+      "start": 18.63,
+      "dur": 0.66,
+      "text": "sign and"
+    },
+    {
+      "start": 19.29,
+      "dur": 0.92,
+      "text": "broadcast in"
+    },
+    {
+      "start": 20.21,
+      "dur": 0.36,
+      "text": "strict"
+    },
+    {
+      "start": 20.57,
+      "dur": 0.4,
+      "text": "order"
+    },
+    {
+      "start": 21.37,
+      "dur": 0.46,
+      "text": "confirm"
+    },
+    {
+      "start": 21.83,
+      "dur": 0.64,
+      "text": "broadcast"
+    },
+    {
+      "start": 22.47,
+      "dur": 0.56,
+      "text": "twice"
+    },
+    {
+      "start": 23.65,
+      "dur": 0.7,
+      "text": "then poll"
+    },
+    {
+      "start": 24.35,
+      "dur": 0.48,
+      "text": "for a"
+    },
+    {
+      "start": 24.83,
+      "dur": 0.3,
+      "text": "terminal"
+    },
+    {
+      "start": 25.13,
+      "dur": 0.46,
+      "text": "state."
+    },
+    {
+      "start": 26.26,
+      "dur": 0.56,
+      "text": "On the"
+    },
+    {
+      "start": 26.82,
+      "dur": 0.6,
+      "text": "happy path"
+    },
+    {
+      "start": 27.96,
+      "dur": 0.44,
+      "text": "transfer"
+    },
+    {
+      "start": 28.4,
+      "dur": 1.32,
+      "text": "476"
+    },
+    {
+      "start": 29.72,
+      "dur": 0.52,
+      "text": "deploys"
+    },
+    {
+      "start": 30.24,
+      "dur": 0.68,
+      "text": "cleanly"
+    },
+    {
+      "start": 31.32,
+      "dur": 0.28,
+      "text": "keeper"
+    },
+    {
+      "start": 31.6,
+      "dur": 0.46,
+      "text": "funding"
+    },
+    {
+      "start": 32.62,
+      "dur": 0.56,
+      "text": "two route"
+    },
+    {
+      "start": 33.18,
+      "dur": 0.44,
+      "text": "in it"
+    },
+    {
+      "start": 34.0,
+      "dur": 0.62,
+      "text": "orchestrator"
+    },
+    {
+      "start": 35.14,
+      "dur": 0.48,
+      "text": "and session"
+    },
+    {
+      "start": 35.62,
+      "dur": 0.72,
+      "text": "transactions"
+    },
+    {
+      "start": 36.34,
+      "dur": 1.1,
+      "text": "all confirm"
+    },
+    {
+      "start": 37.44,
+      "dur": 0.9,
+      "text": "on Solana"
+    },
+    {
+      "start": 38.34,
+      "dur": 0.48,
+      "text": "DevNet"
+    },
+    {
+      "start": 39.36,
+      "dur": 0.68,
+      "text": "five real"
+    },
+    {
+      "start": 40.04,
+      "dur": 0.56,
+      "text": "signatures"
+    },
+    {
+      "start": 40.6,
+      "dur": 0.82,
+      "text": "submitted in"
+    },
+    {
+      "start": 41.42,
+      "dur": 0.86,
+      "text": "order then"
+    },
+    {
+      "start": 42.28,
+      "dur": 0.56,
+      "text": "it stalls."
+    },
+    {
+      "start": 43.92,
+      "dur": 0.78,
+      "text": "Get transfers"
+    },
+    {
+      "start": 44.7,
+      "dur": 1.36,
+      "text": "476"
+    },
+    {
+      "start": 46.38,
+      "dur": 0.4,
+      "text": "status"
+    },
+    {
+      "start": 46.78,
+      "dur": 0.5,
+      "text": "active"
+    },
+    {
+      "start": 47.7,
+      "dur": 0.88,
+      "text": "phase executing"
+    },
+    {
+      "start": 49.12,
+      "dur": 0.6,
+      "text": "zero of"
+    },
+    {
+      "start": 49.72,
+      "dur": 0.74,
+      "text": "five hops"
+    },
+    {
+      "start": 50.86,
+      "dur": 0.6,
+      "text": "no last"
+    },
+    {
+      "start": 51.46,
+      "dur": 0.98,
+      "text": "error no"
+    },
+    {
+      "start": 52.44,
+      "dur": 0.96,
+      "text": "recovery and"
+    },
+    {
+      "start": 53.4,
+      "dur": 0.68,
+      "text": "the expiry"
+    },
+    {
+      "start": 54.08,
+      "dur": 0.58,
+      "text": "has already"
+    },
+    {
+      "start": 54.66,
+      "dur": 0.36,
+      "text": "passed."
+    },
+    {
+      "start": 55.72,
+      "dur": 0.6,
+      "text": "Recovery"
+    },
+    {
+      "start": 56.32,
+      "dur": 0.48,
+      "text": "eventually"
+    },
+    {
+      "start": 56.8,
+      "dur": 0.72,
+      "text": "says can"
+    },
+    {
+      "start": 57.52,
+      "dur": 0.4,
+      "text": "rescue"
+    },
+    {
+      "start": 57.92,
+      "dur": 0.4,
+      "text": "true"
+    },
+    {
+      "start": 58.78,
+      "dur": 0.92,
+      "text": "with 111"
+    },
+    {
+      "start": 59.7,
+      "dur": 0.42,
+      "text": "million"
+    },
+    {
+      "start": 60.12,
+      "dur": 0.6,
+      "text": "lamports"
+    },
+    {
+      "start": 60.72,
+      "dur": 0.72,
+      "text": "rescueable."
+    },
+    {
+      "start": 61.96,
+      "dur": 0.42,
+      "text": "I sign"
+    },
+    {
+      "start": 62.38,
+      "dur": 0.44,
+      "text": "the rescue"
+    },
+    {
+      "start": 62.82,
+      "dur": 0.96,
+      "text": "transaction it"
+    },
+    {
+      "start": 63.78,
+      "dur": 0.7,
+      "text": "confirms on"
+    },
+    {
+      "start": 64.48,
+      "dur": 0.32,
+      "text": "chain"
+    },
+    {
+      "start": 65.36,
+      "dur": 0.68,
+      "text": "then rescue"
+    },
+    {
+      "start": 66.04,
+      "dur": 0.34,
+      "text": "confirm"
+    },
+    {
+      "start": 66.38,
+      "dur": 0.56,
+      "text": "fails"
+    },
+    {
+      "start": 67.62,
+      "dur": 1.8,
+      "text": "MH083"
+    },
+    {
+      "start": 70.04,
+      "dur": 0.34,
+      "text": "custom"
+    },
+    {
+      "start": 70.38,
+      "dur": 1.24,
+      "text": "3012"
+    },
+    {
+      "start": 72.28,
+      "dur": 0.42,
+      "text": "a false"
+    },
+    {
+      "start": 72.7,
+      "dur": 0.56,
+      "text": "promise."
+    },
+    {
+      "start": 74.19,
+      "dur": 0.54,
+      "text": "Transfer"
+    },
+    {
+      "start": 74.73,
+      "dur": 1.1,
+      "text": "479 is"
+    },
+    {
+      "start": 75.83,
+      "dur": 0.28,
+      "text": "worse."
+    },
+    {
+      "start": 76.57,
+      "dur": 0.62,
+      "text": "All four"
+    },
+    {
+      "start": 77.19,
+      "dur": 0.34,
+      "text": "hops"
+    },
+    {
+      "start": 77.53,
+      "dur": 0.78,
+      "text": "complete yet"
+    },
+    {
+      "start": 78.31,
+      "dur": 0.4,
+      "text": "status"
+    },
+    {
+      "start": 78.71,
+      "dur": 0.32,
+      "text": "stays"
+    },
+    {
+      "start": 79.03,
+      "dur": 0.56,
+      "text": "active"
+    },
+    {
+      "start": 80.07,
+      "dur": 0.3,
+      "text": "phase"
+    },
+    {
+      "start": 80.37,
+      "dur": 0.68,
+      "text": "executing"
+    },
+    {
+      "start": 81.05,
+      "dur": 0.82,
+      "text": "completed at"
+    },
+    {
+      "start": 81.87,
+      "dur": 0.28,
+      "text": "null"
+    },
+    {
+      "start": 82.63,
+      "dur": 0.34,
+      "text": "it never"
+    },
+    {
+      "start": 82.97,
+      "dur": 0.44,
+      "text": "settles."
+    },
+    {
+      "start": 84.12,
+      "dur": 1.14,
+      "text": "No unwrap"
+    },
+    {
+      "start": 85.26,
+      "dur": 0.46,
+      "text": "endpoint"
+    },
+    {
+      "start": 85.72,
+      "dur": 0.66,
+      "text": "exists."
+    },
+    {
+      "start": 87.39,
+      "dur": 0.7,
+      "text": "The webhook"
+    },
+    {
+      "start": 88.09,
+      "dur": 0.88,
+      "text": "verifier in"
+    },
+    {
+      "start": 88.97,
+      "dur": 0.36,
+      "text": "the docs"
+    },
+    {
+      "start": 89.33,
+      "dur": 0.64,
+      "text": "is broken."
+    },
+    {
+      "start": 90.55,
+      "dur": 0.44,
+      "text": "The server"
+    },
+    {
+      "start": 90.99,
+      "dur": 0.68,
+      "text": "signs the"
+    },
+    {
+      "start": 91.67,
+      "dur": 0.64,
+      "text": "raw body."
+    },
+    {
+      "start": 92.93,
+      "dur": 0.46,
+      "text": "The example"
+    },
+    {
+      "start": 93.39,
+      "dur": 0.64,
+      "text": "verifies"
+    },
+    {
+      "start": 94.03,
+      "dur": 0.58,
+      "text": "parsed"
+    },
+    {
+      "start": 94.61,
+      "dur": 0.78,
+      "text": "JSON and"
+    },
+    {
+      "start": 95.39,
+      "dur": 0.8,
+      "text": "mismatches."
+    },
+    {
+      "start": 96.83,
+      "dur": 0.38,
+      "text": "The header"
+    },
+    {
+      "start": 97.21,
+      "dur": 0.82,
+      "text": "is x"
+    },
+    {
+      "start": 98.03,
+      "dur": 0.84,
+      "text": "-m"
+    },
+    {
+      "start": 98.87,
+      "dur": 0.96,
+      "text": "-h"
+    },
+    {
+      "start": 99.83,
+      "dur": 1.12,
+      "text": "-signature"
+    },
+    {
+      "start": 101.27,
+      "dur": 0.74,
+      "text": "not x"
+    },
+    {
+      "start": 102.01,
+      "dur": 1.3,
+      "text": "-multihopper"
+    },
+    {
+      "start": 103.31,
+      "dur": 1.08,
+      "text": "-signature."
+    },
+    {
+      "start": 105.1,
+      "dur": 0.72,
+      "text": "Intermittent"
+    },
+    {
+      "start": 105.82,
+      "dur": 1.0,
+      "text": "500s on"
+    },
+    {
+      "start": 106.82,
+      "dur": 0.8,
+      "text": "every get"
+    },
+    {
+      "start": 107.62,
+      "dur": 0.48,
+      "text": "endpoint"
+    },
+    {
+      "start": 108.1,
+      "dur": 0.7,
+      "text": "leak the"
+    },
+    {
+      "start": 108.8,
+      "dur": 0.42,
+      "text": "internal"
+    },
+    {
+      "start": 109.22,
+      "dur": 0.82,
+      "text": "SQL"
+    },
+    {
+      "start": 110.04,
+      "dur": 0.58,
+      "text": "query"
+    },
+    {
+      "start": 111.26,
+      "dur": 0.28,
+      "text": "API"
+    },
+    {
+      "start": 111.54,
+      "dur": 0.54,
+      "text": "keys"
+    },
+    {
+      "start": 112.62,
+      "dur": 0.74,
+      "text": "integrations"
+    },
+    {
+      "start": 113.36,
+      "dur": 1.04,
+      "text": "webhook"
+    },
+    {
+      "start": 114.4,
+      "dur": 0.68,
+      "text": "URLs"
+    },
+    {
+      "start": 115.9,
+      "dur": 0.7,
+      "text": "and information"
+    },
+    {
+      "start": 116.6,
+      "dur": 1.06,
+      "text": "disclosure on"
+    },
+    {
+      "start": 117.66,
+      "dur": 0.6,
+      "text": "top of"
+    },
+    {
+      "start": 118.26,
+      "dur": 0.56,
+      "text": "a reliability"
+    },
+    {
+      "start": 118.82,
+      "dur": 0.6,
+      "text": "bug."
+    },
+    {
+      "start": 120.16,
+      "dur": 0.46,
+      "text": "Create"
+    },
+    {
+      "start": 120.62,
+      "dur": 0.42,
+      "text": "accepts"
+    },
+    {
+      "start": 121.04,
+      "dur": 0.6,
+      "text": "amount raw"
+    },
+    {
+      "start": 121.64,
+      "dur": 0.58,
+      "text": "for 0"
+    },
+    {
+      "start": 122.22,
+      "dur": 0.76,
+      "text": ".1"
+    },
+    {
+      "start": 122.98,
+      "dur": 0.36,
+      "text": "sole"
+    },
+    {
+      "start": 123.34,
+      "dur": 0.48,
+      "text": "alongside"
+    },
+    {
+      "start": 123.82,
+      "dur": 0.38,
+      "text": "amount"
+    },
+    {
+      "start": 124.2,
+      "dur": 0.42,
+      "text": "tokens"
+    },
+    {
+      "start": 124.62,
+      "dur": 0.34,
+      "text": "5"
+    },
+    {
+      "start": 124.96,
+      "dur": 0.68,
+      "text": ".0"
+    },
+    {
+      "start": 126.2,
+      "dur": 0.62,
+      "text": "inconsistent"
+    },
+    {
+      "start": 126.82,
+      "dur": 0.76,
+      "text": "inputs"
+    },
+    {
+      "start": 128.14,
+      "dur": 0.64,
+      "text": "no validation"
+    },
+    {
+      "start": 129.4,
+      "dur": 0.34,
+      "text": "status"
+    },
+    {
+      "start": 129.74,
+      "dur": 0.4,
+      "text": "200"
+    },
+    {
+      "start": 130.78,
+      "dur": 0.46,
+      "text": "18"
+    },
+    {
+      "start": 131.24,
+      "dur": 0.48,
+      "text": "findings"
+    },
+    {
+      "start": 132.44,
+      "dur": 0.64,
+      "text": "one critical"
+    },
+    {
+      "start": 133.58,
+      "dur": 0.76,
+      "text": "five high"
+    },
+    {
+      "start": 134.88,
+      "dur": 0.64,
+      "text": "eight medium"
+    },
+    {
+      "start": 135.94,
+      "dur": 0.32,
+      "text": "four"
+    },
+    {
+      "start": 136.26,
+      "dur": 0.38,
+      "text": "low"
+    },
+    {
+      "start": 137.08,
+      "dur": 0.94,
+      "text": "all reproduced"
+    },
+    {
+      "start": 138.02,
+      "dur": 0.68,
+      "text": "on DevNet"
+    },
+    {
+      "start": 139.16,
+      "dur": 0.6,
+      "text": "all unique"
+    },
+    {
+      "start": 139.76,
+      "dur": 0.36,
+      "text": "against"
+    },
+    {
+      "start": 140.12,
+      "dur": 0.38,
+      "text": "six"
+    },
+    {
+      "start": 140.5,
+      "dur": 0.44,
+      "text": "public"
+    },
+    {
+      "start": 140.94,
+      "dur": 0.58,
+      "text": "competitors."
+    },
+    {
+      "start": 142.6,
+      "dur": 0.5,
+      "text": "Legit"
+    },
+    {
+      "start": 143.1,
+      "dur": 0.46,
+      "text": "DevNet"
+    },
+    {
+      "start": 143.56,
+      "dur": 0.46,
+      "text": "testing"
+    },
+    {
+      "start": 144.5,
+      "dur": 0.78,
+      "text": "a reproducible"
+    },
+    {
+      "start": 145.28,
+      "dur": 0.36,
+      "text": "harness"
+    },
+    {
+      "start": 146.26,
+      "dur": 0.2,
+      "text": "and a"
+    },
+    {
+      "start": 146.46,
+      "dur": 0.68,
+      "text": "full report."
+    },
+    {
+      "start": 147.88,
+      "dur": 0.54,
+      "text": "Break it"
+    },
+    {
+      "start": 148.42,
+      "dur": 0.8,
+      "text": "before users"
+    },
+    {
+      "start": 149.22,
+      "dur": 0.34,
+      "text": "do."
+    }
+  ]
+}

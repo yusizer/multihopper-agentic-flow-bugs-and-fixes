@@ -14,7 +14,7 @@ import { WORDS } from "./words";
 // Until then the composition renders with word-by-word captions only (no audio).
 // Drop the file in, set HAS_VOICE = true, re-run scripts/align_captions.py.
 const VOICE = staticFile("voiceover.mp3");
-const HAS_VOICE = false;
+const HAS_VOICE = true;
 
 // MultiHopper palette: deep navy + Solana purple #9945FF / green #14F195 accent.
 const BG = "#07080d";
@@ -473,58 +473,58 @@ export const MultiHopperDemo: React.FC = () => {
   const { fps, durationInFrames } = useVideoConfig();
   return (
     <AbsoluteFill style={{ backgroundColor: BG }}>
-      {/* Shot 1 — Title (0-10s) */}
-      <Sequence from={0} durationInFrames={300}>
+      {/* Shot 1 — Title (0-13.8s) */}
+      <Sequence from={0} durationInFrames={415}>
         <TitleCard />
       </Sequence>
 
-      {/* Shot 2 — Agentic flow diagram (10-20s) */}
-      <Sequence from={300} durationInFrames={300}>
+      {/* Shot 2 — Agentic flow diagram (13.8-27.7s) */}
+      <Sequence from={415} durationInFrames={415}>
         <FlowDiagram />
       </Sequence>
 
-      {/* Shot 3 — Happy-path deploy (20-33s) */}
-      <Sequence from={600} durationInFrames={390}>
-        <TerminalFrame title="multihopper — python run_transfer.py" lines={DEPLOY_LINES} perLine={0.5} startOffset={0.2} fontSize={24} />
+      {/* Shot 3 — Happy-path deploy (27.7-45.6s) */}
+      <Sequence from={830} durationInFrames={539}>
+        <TerminalFrame title="multihopper — python run_transfer.py" lines={DEPLOY_LINES} perLine={0.69} startOffset={0.28} fontSize={24} />
       </Sequence>
 
-      {/* Shot 4 — STUCK 476 (33-42s) */}
-      <Sequence from={990} durationInFrames={270}>
-        <TerminalFrame title="multihopper — GET /transfers/476" lines={STUCK_LINES} perLine={0.55} startOffset={0.2} fontSize={26} />
+      {/* Shot 4 — STUCK 476 (45.6-58.1s) */}
+      <Sequence from={1369} durationInFrames={373}>
+        <TerminalFrame title="multihopper — GET /transfers/476" lines={STUCK_LINES} perLine={0.76} startOffset={0.28} fontSize={26} />
       </Sequence>
 
-      {/* Shot 5 — RESCUE false promise (42-55s) */}
-      <Sequence from={1260} durationInFrames={390}>
-        <TerminalFrame title="multihopper — rescue/prepare + rescue/confirm" lines={RESCUE_LINES} perLine={0.5} startOffset={0.2} fontSize={24} />
+      {/* Shot 5 — RESCUE false promise (58.1-76.0s) */}
+      <Sequence from={1742} durationInFrames={539}>
+        <TerminalFrame title="multihopper — rescue/prepare + rescue/confirm" lines={RESCUE_LINES} perLine={0.69} startOffset={0.28} fontSize={24} />
       </Sequence>
 
-      {/* Shot 6 — NEVER SETTLES 479 (55-63s) */}
-      <Sequence from={1650} durationInFrames={240}>
-        <TerminalFrame title="multihopper — GET /transfers/479" lines={NEVER_LINES} perLine={0.5} startOffset={0.2} fontSize={26} />
+      {/* Shot 6 — NEVER SETTLES 479 (76.0-87.1s) */}
+      <Sequence from={2281} durationInFrames={332}>
+        <TerminalFrame title="multihopper — GET /transfers/479" lines={NEVER_LINES} perLine={0.69} startOffset={0.28} fontSize={26} />
       </Sequence>
 
-      {/* Shot 7 — WEBHOOK (63-76s) */}
-      <Sequence from={1890} durationInFrames={390}>
-        <TerminalFrame title="multihopper — POST /webhooks + delivery" lines={WEBHOOK_LINES} perLine={0.5} startOffset={0.2} fontSize={24} />
+      {/* Shot 7 — WEBHOOK (87.1-105.1s) */}
+      <Sequence from={2613} durationInFrames={539}>
+        <TerminalFrame title="multihopper — POST /webhooks + delivery" lines={WEBHOOK_LINES} perLine={0.69} startOffset={0.28} fontSize={24} />
       </Sequence>
 
-      {/* Shot 8 — 500 + SQL leak (76-84s) */}
-      <Sequence from={2280} durationInFrames={240}>
-        <TerminalFrame title="multihopper — GET /transfers/476 (500)" lines={LEAK_LINES} perLine={0.55} startOffset={0.2} fontSize={26} />
+      {/* Shot 8 — 500 + SQL leak (105.1-116.2s) */}
+      <Sequence from={3152} durationInFrames={332}>
+        <TerminalFrame title="multihopper — GET /transfers/476 (500)" lines={LEAK_LINES} perLine={0.76} startOffset={0.28} fontSize={26} />
       </Sequence>
 
-      {/* Shot 9 — AMOUNT MISMATCH (84-91s) */}
-      <Sequence from={2520} durationInFrames={210}>
-        <TerminalFrame title="multihopper — POST /transfers" lines={AMOUNT_LINES} perLine={0.55} startOffset={0.2} fontSize={26} />
+      {/* Shot 9 — AMOUNT MISMATCH (116.2-125.9s) */}
+      <Sequence from={3484} durationInFrames={290}>
+        <TerminalFrame title="multihopper — POST /transfers" lines={AMOUNT_LINES} perLine={0.76} startOffset={0.28} fontSize={26} />
       </Sequence>
 
-      {/* Shot 10 — Findings summary (91-101s) */}
-      <Sequence from={2730} durationInFrames={300}>
+      {/* Shot 10 — Findings summary (125.9-139.7s) */}
+      <Sequence from={3774} durationInFrames={415}>
         <FindingsSummary />
       </Sequence>
 
-      {/* Shot 11 — Final proof card (101-110s) */}
-      <Sequence from={3030} durationInFrames={270}>
+      {/* Shot 11 — Final proof card (139.7-152.0s) */}
+      <Sequence from={4189} durationInFrames={371}>
         <FinalCard />
       </Sequence>
 
