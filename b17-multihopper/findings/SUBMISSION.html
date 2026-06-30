@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Break It Before Users Do — MultiHopper Agentic Flow Bugs & Fixes</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:920px;margin:40px auto;padding:0 20px;line-height:1.55;color:#1a1a1a;}
+h1{color:#9945FF;font-size:28px;}h2{color:#14F195;border-bottom:2px solid #14F195;padding-bottom:4px;margin-top:28px;}
+h3{color:#0a7a5a;margin-top:22px;}h4{color:#444;}
+table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{border:1px solid #ccc;padding:6px 10px;text-align:left;vertical-align:top;}
+th{background:#f4f0ff;}tr:nth-child(even){background:#fafafa;}
+code{background:#f4f4f4;padding:2px 5px;border-radius:3px;font-family:Consolas,'Courier New',monospace;font-size:0.92em;}
+pre{background:#0b0e16;color:#cbd5e1;padding:14px 16px;border-radius:8px;overflow:auto;}pre code{background:none;color:#cbd5e1;padding:0;}
+strong{color:#111;}hr{border:none;border-top:1px solid #ddd;margin:24px 0;}
+</style></head><body><h1>Break It Before Users Do — MultiHopper Agentic Flow Bugs &amp; Fixes</h1>
+<p><strong>Bounty:</strong> Break It Before Users Do: MultiHopper Agentic Flow Bugs &amp; Fixes (Superteam Earn / MultiHopper / Enigma Fund)<br />
+<strong>Environment:</strong> MultiHopper devnet only (<code>https://devnet.multihopper.com/api/v1</code>, <code>mh_test_</code> API key, Solana devnet). No mainnet, no live funds.<br />
+<strong>Contact:</strong> @<YOUR_HANDLE> (Telegram / Twitter)<br />
+<strong>Repo:</strong> <LINK_TO_REPO><br />
+<strong>Demo video:</strong> <LINK_TO_DEMO_VIDEO></p>
+<hr />
+<h2>Executive summary</h2>
+<p>Responsible testing of the MultiHopper agentic transfer flow on <strong>devnet only</strong> (<code>mh_test_</code> key, Solana devnet, no mainnet, no live funds). A reproducible Python harness drives the documented <code>create → prepare → sign/broadcast → confirm-broadcast → monitor</code> flow end-to-end, then probes recovery, webhook, MCP, fee, and validation surfaces.</p>
+<p><strong>18 findings — all reproduced on devnet or confirmed in docs; all unique vs the 6 public competitor submissions (gieskuy5, isoooiso, Lucijano, cybergod-duck, greendhy, 0xNickdev).</strong></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Severity</th>
+<th>Title</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td><strong>Critical</strong></td>
+<td>Stuck hops: <code>canRescue=true</code> is a false promise; rescue tx fails on-chain (Custom 3012) + MH_083; integrator cannot self-rescue → funds locked</td>
+</tr>
+<tr>
+<td>F2</td>
+<td><strong>High</strong></td>
+<td>Intermittent HTTP 500 on all GET endpoints with SQL/ORM query leak (DB schema disclosure + reliability)</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>Med</td>
+<td><code>GET /transfers/:id</code> signatures omit <code>keeperFundingSignature</code>/<code>orchestratorInitSignature</code></td>
+</tr>
+<tr>
+<td>F4</td>
+<td>Med</td>
+<td><code>hops</code> semantics inconsistent across API (7 vs <code>hopsTotal</code> 5/4 vs <code>totalSteps</code>)</td>
+</tr>
+<tr>
+<td>F5</td>
+<td>Med</td>
+<td>Rescue endpoints undocumented; <code>rescue_step</code> authority/timelock unknown</td>
+</tr>
+<tr>
+<td>F6</td>
+<td>Med</td>
+<td><code>mh_test_</code> key minted on production dashboard works against mainnet (prefix ≠ cluster)</td>
+</tr>
+<tr>
+<td>F7</td>
+<td>Med</td>
+<td>Screening fee present in <code>estimate.sol.breakdown</code> but docs say "not in /estimate" → double-count risk</td>
+</tr>
+<tr>
+<td>F8</td>
+<td>Med</td>
+<td>MCP server exposes only 2 docs-tools, not the API-step tools the agentic guide describes</td>
+</tr>
+<tr>
+<td>F9</td>
+<td>Med</td>
+<td>Recipient ATA precondition absent from the agentic integration guide</td>
+</tr>
+<tr>
+<td>F10</td>
+<td>Low</td>
+<td>API <code>phase</code> enum vs <code>route-lifecycle</code> stages mismatch</td>
+</tr>
+<tr>
+<td>F11</td>
+<td>Low</td>
+<td><code>arrivalSeconds</code> minimum formula (<code>hops × 20s</code>) only in dashboard/error, not API docs</td>
+</tr>
+<tr>
+<td>F12</td>
+<td>Med</td>
+<td>Webhook secret returned without the documented <code>whsec_</code> prefix</td>
+</tr>
+<tr>
+<td>F13</td>
+<td><strong>High</strong></td>
+<td>Webhook HMAC verifier broken: server signs raw body, docs example verifies parsed JSON (rejects all); <code>timingSafeEqual</code> lacks length guard (RangeError DoS)</td>
+</tr>
+<tr>
+<td>F14</td>
+<td>Med</td>
+<td>Webhook signature header <code>x-mh-signature</code> ≠ documented <code>x-multihopper-signature</code></td>
+</tr>
+<tr>
+<td>F15</td>
+<td>Med</td>
+<td>Webhook payload undocumented, no <code>eventId</code>/dedupe (at-least-once retry → double-process)</td>
+</tr>
+<tr>
+<td>F16</td>
+<td><strong>High</strong></td>
+<td><code>amountRaw</code>/<code>amountTokens</code>/<code>tokenDecimals</code> consistency not validated (mismatch → 200)</td>
+</tr>
+<tr>
+<td>F17</td>
+<td>Med</td>
+<td>Validation errors return <code>BAD_REQUEST</code>, not documented <code>MH_011</code>/<code>MH_013</code>; <code>MH_016</code> undocumented</td>
+</tr>
+<tr>
+<td>F18</td>
+<td><strong>High</strong></td>
+<td>All hops complete but transfer never settles; no API <code>unwrap</code>/<code>settle</code> endpoint (happy-path fund-lock)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Highest impact:</strong> F1 + F18 are fund-safety defects where the happy path locks funds with no integrator-driven recovery. F2 is information disclosure + reliability. F13/F14 break the documented webhook integration. F8 contradicts the sponsor-highlighted MCP surface.</p>
+<p><strong>Differentiators:</strong> legit devnet (<code>mh_test_</code>) + reproducible harness (<code>run_transfer.py</code> + per-finding probes) + demo video + 18 unique findings that avoid every occupied area.</p>
+<hr />
+<h2>What we built</h2>
+<p>A reproducible Python agent harness that drives the documented agentic transfer<br />
+flow end-to-end on MultiHopper devnet, plus targeted probes for recovery,<br />
+webhook, MCP, and fee-surface bugs.</p>
+<ul>
+<li><strong>Language/framework:</strong> Python 3.11, <code>solders</code> 0.27.1, <code>base58</code>, <code>requests</code>.</li>
+<li><strong>Flow implemented:</strong> <code>POST /transfers</code> → <code>POST /transfers/:id/prepare</code> →<br />
+  client-side slot-based signing of Versioned v0 tx (preserving server ephemeral<br />
+  partial signatures) + legacy <code>partial_sign</code> for orchestrator → strict-order<br />
+  broadcast (<code>keeperFundingTx</code> → <code>routeInitTxs</code> → <code>orchestratorInitTx</code> →<br />
+<code>sessionInitTxs</code>, wait-for-confirmed, 3s propagation delays) → two-step<br />
+<code>POST /transfers/:id/confirm-broadcast</code> → <code>GET /transfers/:id</code> poll.</li>
+<li><strong>Resume support:</strong> re-<code>/prepare</code> on blockhash expiry, skip <code>null</code> groups,<br />
+  respect <code>resume.nothingToDo</code> / <code>routeAlreadyDeployed</code>.</li>
+<li><strong>Signing wallet:</strong> devnet keypair <code>FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5</code> (test funds only).</li>
+<li><strong>Repro:</strong> <code>python run_transfer.py</code> (happy path) and per-finding probes<br />
+  (<code>probe_recovery*.py</code>, <code>probe_webhook.py</code>, <code>probe_wrong_recipient.py</code>,<br />
+<code>probe_500.py</code>). All exit-coded; sanitized logs in <code>evidence/</code>.</li>
+</ul>
+<h2>Method</h2>
+<ol>
+<li>Reviewed all 19 doc pages + <code>llms.txt</code> + agentic integration guide + MCP server guide.</li>
+<li>Built the harness against the documented contract; ran happy path on devnet.</li>
+<li>Drove edge/failure paths (stuck transfers, rescue, wrong recipient, intermittent 500s).</li>
+<li>Cross-checked API responses against docs (signatures, fees, phases, events, MCP tools).</li>
+</ol>
+<hr />
+<h2>Findings</h2>
+<h3>F1 — Stuck hops: <code>canRescue=true</code> is a false promise; rescue tx fails on-chain (Custom 3012) + MH_083; integrator cannot self-rescue</h3>
+<p><strong>Severity: Critical (fund safety / agentic reliability)</strong></p>
+<p><strong>Affected flow:</strong> <code>GET /transfers/:id</code> monitoring + <code>POST /transfers/:id/rescue/prepare</code> + <code>/rescue/confirm</code> recovery.</p>
+<p><strong>Repro (devnet, transfer 476):</strong><br />
+1. <code>POST /transfers</code> (SOL, 0.1, hops=7, arrivalSeconds=300, recipient=self) → id=476.<br />
+2. <code>POST /transfers/476/prepare</code> → 4 tx groups; sign+broadcast all in strict order; all 5 txs confirmed on-chain (keeperFunding + 2 routeInit + orchestrator + session); <code>confirm-broadcast</code> ×2.<br />
+3. <code>GET /transfers/476</code> for &gt;30 min: <code>status=active</code>, <code>phase=executing</code>, <code>progress.hopsCompleted=0/5</code>, <code>lastError=null</code>, <code>expiresAt</code> passed.<br />
+4. <strong>Initially</strong> <code>recovery=null</code> and <code>rescue/prepare</code> → <strong>409 <code>MH_081</code> "Nothing to rescue"</strong>.<br />
+5. <strong>After time</strong> (no agent action), <code>recovery</code> becomes <code>{canRescue: true, rescuableLamports: 111316960, rescuableAccounts: [orchestrator_config + 5× step_state], canReclaimRent: false}</code> and <code>rescue/prepare</code> returns <code>rescueTxs:[1 tx]</code> + <code>rescuable.totalLamports: 111316960</code> (0.111 SOL).<br />
+6. Sign the rescue tx (slot-based, sourceOwner keypair) + broadcast → <strong>confirmed on-chain</strong>, sig <code>2kpxgXqPi1mksZYbQgw3jdcPjhX3FbFjsAp3NcCj1yWTArbtKtS1ZT77G1evBydqhE99qxDVhqVz969GQC61ye46</code>.<br />
+7. <code>POST /transfers/476/rescue/confirm</code> → <strong>400 <code>MH_083</code> "Provided signatures do not match prepared bundle — RESCUE_TX_FAILED: … InstructionError:[4,{Custom:3012}]"</strong>.</p>
+<p><strong>Evidence:</strong> <code>evidence/probe_476_full.txt</code>, <code>evidence/rescue_476.json</code>, devnet tx sigs above + rescue sig <code>2kpxgXqPi1mksZYbQgw3jdcPjhX3FbFjsAp3NcCj1yWTArbtKtS1ZT77G1evBydqhE99qxDVhqVz969GQC61ye46</code>.</p>
+<p><strong>Root cause:</strong> <code>concepts/keepers</code> states <code>rescue_step</code> is an "admin escape hatch … requires privileged authority." The API exposes <code>/rescue/prepare</code>+<code>/rescue/confirm</code> to the integrator and <code>recovery.canRescue=true</code> suggests funds are rescuable, but the on-chain <code>rescue_step</code> instruction rejects the sourceOwner-signed rescue tx with <strong>Custom 3012 (Anchor <code>AccountNotInitialized</code> — "The program expected this account to be already initialized")</strong>, <code>InstructionError:[4,{Custom:3012}]</code>, after which <code>rescue/confirm</code> returns MH_083. The rescue authority account/signer is not available to the integrator — only MultiHopper's privileged/admin key can rescue. (Custom 3012 and the on-chain error table are undocumented.)</p>
+<p><strong>Impact (fund safety):</strong> <code>canRescue=true</code> is a <strong>false promise</strong>. An agent that follows the recovery path (prepare → sign → broadcast → confirm) gets a confirmed on-chain tx that fails with Custom 3012, then MH_083. Funds (0.111 SOL here: principal + wrapper backing + rent across orchestrator_config + 5 step_state accounts) remain locked with no integrator-driven recovery. Combined with <code>protocol/route-lifecycle</code> "Routes do not expire" and no hop-level refund, stuck hops = permanent fund lock for the integrator.</p>
+<p><strong>Additional issues surfaced:</strong><br />
+- <code>recovery</code> is populated while <code>phase=executing</code>, contradicting <code>api-reference/transfers/get</code> which says recovery is "only populated when phase is recoverable/settled/rescued/reclaimed."<br />
+- Rescue availability is time-gated and opaque: <code>MH_081</code> first, then <code>canRescue=true</code> later — the agent cannot tell when rescue becomes available.<br />
+- The rescue tx's blockhash fails RPC simulation ("Blockhash not found") and only broadcasts with <code>skipPreflight=true</code>, which is undocumented.<br />
+- Custom 3012 and the on-chain error-code table are entirely undocumented.</p>
+<p><strong>Proposed fix:</strong><br />
+- Either make <code>rescue_step</code> permissionless/creator-signed (so <code>canRescue=true</code> is actually usable by the integrator), or stop returning <code>canRescue=true</code> + <code>rescueTxs</code> to integrators who cannot sign it.<br />
+- Document <code>rescue_step</code> authority, the Custom 3012 error code, and the full on-chain error table.<br />
+- Populate <code>recovery</code> consistently with the documented phase set (or update the docs).<br />
+- Document the rescue-availability timing and the <code>skipPreflight</code> requirement.</p>
+<hr />
+<h3>F2 — Intermittent HTTP 500 on all GET endpoints with SQL query leak</h3>
+<p><strong>Severity: High (reliability + information disclosure)</strong></p>
+<p><strong>Affected flow:</strong> <code>GET /transfers/:id</code>, <code>GET /transfers/by-external/:id</code>, <code>GET /transfers</code>, <code>GET /usage</code>.</p>
+<p><strong>Repro (devnet):</strong><br />
+1. Issue any GET with a valid <code>mh_test_</code> key.<br />
+2. Intermittently the server returns:</p>
+<pre><code>HTTP 500
+{&quot;statusCode&quot;:500,&quot;error&quot;:&quot;Internal Server Error&quot;,&quot;message&quot;:&quot;Failed query: select \&quot;api_keys\&quot;.\&quot;id\&quot;,\&quot;api_keys\&quot;.\&quot;integration_id\&quot;,\&quot;api_keys\&quot;.\&quot;key_hash\&quot;,\&quot;api_keys\&quot;.\&quot;key_prefix\&quot;,\&quot;api_keys\&quot;.\&quot;mode\&quot;,\&quot;api_keys\&quot;.\&quot;label\&quot;,\&quot;api_keys\&quot;.\&quot;is_revoked\&quot;,\&quot;api_keys\&quot;.\&quot;revoked_at\&quot;,\&quot;api_keys\&quot;.\&quot;last_used_at\&quot;,\&quot;api_keys\&quot;.\&quot;created_at\&quot;,\&quot;integrations\&quot;.\&quot;id\&quot;,\&quot;integrations\&quot;.\&quot;user_id\&quot;,\&quot;integrations\&quot;.\&quot;name\&quot;,\&quot;integrations\&quot;.\&quot;webhook_url\&quot;,\&quot;integrations\&quot;.\&quot;rew...&quot;}
+</code></pre>
+<ol start="3">
+<li>Re-running the same request seconds later succeeds (20/20 OK on re-probe).</li>
+</ol>
+<p><strong>Evidence:</strong> first <code>inspect_transfer.py</code> run captured simultaneous 500 on all<br />
+four GET endpoints with the leaked ORM/SQL query; <code>evidence/probe_476_full.txt</code><br />
+for the recovered 200 responses; <code>probe_500.py</code> (20× re-probe = 0/20, confirming<br />
+intermittent).</p>
+<p><strong>Impact:</strong><br />
+- <strong>Information disclosure:</strong> the error message leaks the internal DB schema and<br />
+  ORM query (<code>api_keys</code>, <code>integrations</code>, <code>webhook_url</code>, <code>key_hash</code>, <code>mode</code>,<br />
+<code>is_revoked</code>, …). Useful for an attacker profiling the auth/integration model.<br />
+- <strong>Reliability:</strong> an agent polling <code>GET /transfers/:id</code> for terminal state can<br />
+  receive 500 instead of <code>completed</code>/<code>failed</code> and must distinguish a transient<br />
+  500 from a real failure. No <code>MH_XXX</code> code, no <code>requestId</code> (unlike MH_XXX<br />
+  errors which now include <code>requestId</code>).<br />
+- <strong>Error-format inconsistency:</strong> 500 uses Fastify's flat<br />
+<code>{statusCode,error,message}</code> shape, not the documented <code>{error:{code,message}}</code><br />
+  envelope — clients that parse <code>error.code</code> crash (our client did:<br />
+<code>AttributeError: 'str' object has no attribute 'get'</code>).</p>
+<p><strong>Proposed fix:</strong><br />
+- Never leak SQL/ORM text in error messages; return a generic <code>MH_091</code> (503) or<br />
+<code>MH_090</code> (500) with <code>requestId</code>, no internal query text.<br />
+- Fix the upstream DB query (likely the api_keys↔integrations join) that fails<br />
+  under load.<br />
+- Return the documented <code>{error:{code,message,requestId}}</code> envelope for <em>all</em><br />
+  errors, including 500s.</p>
+<hr />
+<h3>F3 — <code>GET /transfers/:id</code> signatures omit <code>keeperFundingSignature</code> and <code>orchestratorInitSignature</code></h3>
+<p><strong>Severity: Medium (agentic observability)</strong></p>
+<p><strong>Affected flow:</strong> status monitoring after <code>confirm-broadcast</code>.</p>
+<p><strong>Repro (devnet, transfer 476):</strong> after a full deploy where <code>keeperFundingTx</code><br />
+and <code>orchestratorInitTx</code> were broadcast and confirmed on-chain and their<br />
+signatures submitted via <code>confirm-broadcast</code>, <code>GET /transfers/476</code> returns:</p>
+<pre><code class="language-json">&quot;signatures&quot;: { &quot;routeInit&quot;: [&quot;3ShSCD5...&quot;], &quot;sessionInit&quot;: [], &quot;hops&quot;: [] }
+</code></pre>
+<p>Neither <code>keeperFundingSignature</code> nor <code>orchestratorInitSignature</code> is present,<br />
+even though <code>confirm-broadcast</code> requires <code>keeperFundingSignature</code> (MH_039 if<br />
+missing) and accepts <code>orchestratorInitSignature</code>.</p>
+<p><strong>Docs:</strong> <code>api-reference/transfers/get</code> documents <code>signatures</code> as containing<br />
+only <code>routeInit</code>, <code>sessionInit</code>, <code>hops</code>.</p>
+<p><strong>Impact:</strong> An agent cannot verify from <code>GET</code> that the keeper funding and<br />
+orchestrator init were recorded. If the intermediate <code>confirm-broadcast</code> (the<br />
+double-funding-protection step) silently no-oped, the agent has no signal. Also<br />
+<code>routeInit</code> shows 1 signature though 2 <code>routeInitTxs</code> were broadcast — the<br />
+recorded set is incomplete relative to on-chain reality.</p>
+<p><strong>Proposed fix:</strong> Include <code>keeperFundingSignature</code> and <code>orchestratorInitSignature</code><br />
+in <code>GET /transfers/:id</code> <code>signatures</code>, and ensure <code>routeInit</code>/<code>sessionInit</code><br />
+arrays reflect all broadcast txs (or document why they may be subset).</p>
+<hr />
+<h3>F4 — <code>hops</code> semantics are inconsistent across API surface</h3>
+<p><strong>Severity: Medium (agentic confusion)</strong></p>
+<p><strong>Repro (devnet, transfer 476, requested <code>hops=7</code>):</strong><br />
+- <code>POST /transfers</code> body: <code>hops: 7</code> → response <code>hops: 7</code>.<br />
+- <code>GET /transfers/476</code>: <code>progress.hopsTotal: 5</code>.<br />
+- <code>POST /transfers/476/prepare</code> <code>resume</code>: <code>totalHops: 7</code>, <code>totalSteps: 5</code>,<br />
+<code>completedStepIndices: [0,1,2,3,4]</code>.</p>
+<p><strong>Impact:</strong> An agent cannot predict how many hops will actually execute, how<br />
+many on-chain steps exist, or when <code>progress.hopsTotal/totalHops</code> will match the<br />
+requested <code>hops</code>. This breaks progress UIs, ETA math, and "are we done?" checks.<br />
+<code>totalSteps</code> (orchestrator deploy steps) vs <code>hopsTotal</code> (execute hops) vs<br />
+<code>hops</code> (requested abstraction) are three different numbers with no documented<br />
+relationship.</p>
+<p><strong>Proposed fix:</strong> Document the relationship (<code>hops</code> = requested abstraction,<br />
+<code>totalSteps</code> = orchestrator deploy steps, <code>progress.hopsTotal</code> = executable<br />
+hops) and make <code>progress.hopsTotal</code> equal the requested <code>hops</code> or explain the<br />
+delta.</p>
+<hr />
+<h3>F5 — Rescue endpoints are undocumented; <code>rescue_step</code> authority/timelock unknown</h3>
+<p><strong>Severity: Medium (documentation blocker / trust model)</strong></p>
+<p><strong>Repro (devnet):</strong><br />
+- <code>POST /transfers/476/rescue/prepare</code> → <code>MH_081</code> (409) "Nothing to rescue".<br />
+- <code>POST /transfers/476/rescue/confirm</code> with <code>{}</code> → <code>400</code> <code>BAD_REQUEST:
+  rescueSignatures: Required</code> (note: code is the string <code>BAD_REQUEST</code>, not an<br />
+<code>MH_XXX</code> code).<br />
+- <code>rescue/prepare</code> / <code>rescue/confirm</code> are <strong>not</strong> in <code>llms.txt</code> API index; no<br />
+  API-reference page exists.</p>
+<p><strong>Docs:</strong> <code>concepts/keepers</code> says <code>rescue_step</code> is an "admin escape hatch …<br />
+requires privileged authority" but does <strong>not</strong> specify who holds that<br />
+authority, whether a timelock applies, or whether an integrator can ever<br />
+self-rescue. <code>concepts/security</code> claims "funds are secured by program logic, not<br />
+by operator keys," which contradicts an admin-keyed rescue.</p>
+<p><strong>Impact:</strong> An agent cannot implement recovery from docs alone — the request<br />
+schema (<code>rescueSignatures</code>) had to be reverse-engineered from a validation<br />
+error. Worse, even with correct schema, <code>rescue_step</code> may require MultiHopper's<br />
+admin key, so integrator-driven rescue may be impossible — contradicting the<br />
+trustless positioning.</p>
+<p><strong>Proposed fix:</strong><br />
+- Add an API-reference page for <code>/rescue/prepare</code> and <code>/rescue/confirm</code><br />
+  (request/response, <code>MH_080</code>–<code>MH_083</code>, signing requirements).<br />
+- Document who holds <code>rescue_step</code> authority, whether a timelock exists, and<br />
+  whether integrators can self-rescue.<br />
+- Reconcile <code>concepts/security</code> "not by operator keys" with admin-keyed rescue.</p>
+<hr />
+<h3>F6 — <code>mh_test_</code> API key can target mainnet (prefix ≠ cluster)</h3>
+<p><strong>Severity: Medium (unsafe assumption / misroute risk)</strong></p>
+<p><strong>Docs (<code>concepts/environments</code>):</strong> "a key is bound to the cluster of the<br />
+deployment that minted it — it is not switched by the key prefix." Production<br />
+issues both <code>mh_live_</code> and <code>mh_test_</code> keys; devnet issues only <code>mh_test_</code>.</p>
+<p><strong>Impact:</strong> An agent that infers "I'm on devnet because my key is <code>mh_test_</code>"<br />
+is wrong — a <code>mh_test_</code> key minted on the <strong>production</strong> dashboard works against<br />
+<strong>mainnet</strong> (real funds). The agentic guide's copyable <code>CLAUDE.md</code> block and<br />
+quickstart imply <code>mh_test_</code> = test, which can lead an agent to accidentally hit<br />
+mainnet with real value.</p>
+<p><strong>Proposed fix:</strong><br />
+- Make the guide/quickstart explicit: prefix = accounting mode, <strong>dashboard =<br />
+  cluster</strong>; always set base URL explicitly per environment.<br />
+- Consider refusing <code>mh_test_</code> keys on the mainnet API (or emitting a loud<br />
+  warning) to prevent accidental real-fund usage from test-labeled keys.</p>
+<hr />
+<h3>F7 — Screening fee present in <code>estimate.sol.breakdown</code> but docs say it is not</h3>
+<p><strong>Severity: Medium (double-count risk / doc contradiction)</strong></p>
+<p><strong>Docs (<code>concepts/compliance</code>):</strong> "In <code>/estimate</code>? No — you must add it on top<br />
+of the estimate yourself."</p>
+<p><strong>Repro (devnet, <code>POST /transfers/estimate</code>, 0.1 SOL):</strong></p>
+<pre><code class="language-json">&quot;sol&quot;: { &quot;requiredSolUpFrontLamports&quot;: 185403092, &quot;breakdown&quot;: {
+  &quot;routeInitRentLamports&quot;: 22223280, &quot;orchestratorRentLamports&quot;: 18708480,
+  &quot;ataRentLamports&quot;: 3326880, &quot;transactionFeesLamports&quot;: 50000,
+  &quot;screeningFeeLamports&quot;: 2000000, ... } }
+</code></pre>
+<p><code>screeningFeeLamports: 2000000</code> (0.002 SOL) <strong>is</strong> in the breakdown.</p>
+<p><strong>Impact:</strong> An agent that follows the docs ("add 0.002 SOL on top of estimate")<br />
+will <strong>double-fund</strong> the screening fee, since <code>estimate</code> already includes it in<br />
+the breakdown (and possibly in <code>requiredSolUpFrontLamports</code>). Conversely, if the<br />
+breakdown is informational but not included in <code>requiredSolUpFrontLamports</code>, the<br />
+agent will underfund. The docs don't disambiguate.</p>
+<p><strong>Proposed fix:</strong> State explicitly whether <code>screeningFeeLamports</code> is included in<br />
+<code>requiredSolUpFrontLamports</code>; update <code>concepts/compliance</code> to match the actual<br />
+<code>estimate</code> response.</p>
+<hr />
+<h3>F8 — MCP server does not expose the API-step tools the agentic guide describes</h3>
+<p><strong>Severity: Medium (documentation blocker / agent integration)</strong></p>
+<p><strong>Docs (<code>guides/agentic-integration</code> MCP table):</strong> lists <code>estimate_transfer</code>,<br />
+<code>create_transfer</code>, <code>prepare_transfer</code>, <code>sign_and_broadcast</code>, <code>confirm_broadcast</code>,<br />
+<code>get_transfer</code>, <code>list_transfers</code>, <code>prepare_rescue</code>, <code>confirm_rescue</code> as MCP tools.</p>
+<p><strong>Real MCP server (<code>https://dev-docs.multihopper.com/mcp</code>, SSE, no auth):</strong><br />
+exposes only <code>search_multi_hopper</code> and <code>query_docs_filesystem_multi_hopper</code><br />
+(both read-only documentation tools). None of the API-step tools exist.</p>
+<p><strong>Impact:</strong> An agent builder who wires the MultiHopper MCP server expecting to<br />
+drive transfers through MCP tools (as the guide implies) will find no such<br />
+tools — the MCP server is a docs search box, not an API wrapper. This is a<br />
+direct docs↔reality contradiction in the sponsor-highlighted MCP surface.</p>
+<p><strong>Proposed fix:</strong> Either (a) expose the API-step tools via MCP as documented, or<br />
+(b) correct the agentic guide to state the MCP server is documentation-only and<br />
+the API-step tools are to be implemented locally by the agent.</p>
+<hr />
+<h3>F9 — Recipient ATA precondition is absent from the agentic integration guide</h3>
+<p><strong>Severity: Medium (documentation blocker)</strong></p>
+<p><strong>Docs:</strong> <code>protocol/route-lifecycle</code> failure case: "Recipient account missing —<br />
+the executor must ensure recipient token accounts exist before submitting.<br />
+Standard ATA creation applies." The agentic integration guide has zero mentions<br />
+of ATA creation.</p>
+<p><strong>Impact:</strong> An agent that deploys a route to a recipient without the required<br />
+token account will see the route stall in <code>executing</code> with <code>hopsCompleted=0</code><br />
+and no error (see F1) — the exact stuck state we reproduced. The precondition<br />
+that would have prevented it is not in the guide the agent follows.</p>
+<p><strong>Proposed fix:</strong> Add an ATA-creation step to the agentic integration guide<br />
+before <code>confirm-broadcast</code> (or document that the keeper/protocol creates ATAs).</p>
+<hr />
+<h3>F10 — API <code>phase</code> enum vs <code>route-lifecycle</code> doc stages mismatch</h3>
+<p><strong>Severity: Low (documentation)</strong></p>
+<p><strong>Docs:</strong> <code>api-reference/transfers/get</code> <code>phase</code> enum:<br />
+<code>quoted|deploying|executing|settled|failed|recoverable|rescued|reclaimed|expired</code>.<br />
+<code>protocol/route-lifecycle</code> describes four stages (Create/Deploy/Execute/Unwrap)<br />
+and explicitly says "Routes do not expire" — no <code>recoverable</code>/<code>expired</code> formal<br />
+phases.</p>
+<p><strong>Impact:</strong> An agent reasoning about phases from <code>route-lifecycle</code> will not<br />
+expect <code>recoverable</code>/<code>expired</code> and may mishandle them.</p>
+<p><strong>Proposed fix:</strong> Reconcile the phase enum across the lifecycle doc and the API<br />
+reference.</p>
+<hr />
+<h3>F11 — <code>arrivalSeconds</code> minimum formula only in dashboard, not in API docs</h3>
+<p><strong>Severity: Low (documentation blocker)</strong></p>
+<p><strong>Repro:</strong> the provider-registration dashboard shows "Arrival Time (seconds)<br />
+Min: 140s (7 hops x 20s)". <code>api-reference/transfers/create</code> says only "Minimum:<br />
+60". <code>guides/agentic-integration</code> says "varies by hop count (MH_014)".</p>
+<p><strong>Impact:</strong> An agent that sets <code>arrivalSeconds=60</code> with <code>hops=7</code> gets <code>MH_014</code><br />
+and cannot derive the minimum from the API docs — only from the dashboard UI.</p>
+<p><strong>Proposed fix:</strong> Document <code>arrivalSeconds</code> minimum = <code>hops × 20s</code> in the API<br />
+reference, and have <code>MH_014</code> return the required minimum in the error message.</p>
+<hr />
+<h3>F12 — Webhook signing secret returned without the documented <code>whsec_</code> prefix</h3>
+<p><strong>Severity: Medium (documentation blocker / integration)</strong></p>
+<p><strong>Repro (devnet):</strong> <code>POST /api/v1/webhooks</code> with <code>{"url":"https://webhook.site/&lt;uuid&gt;","events":["transfer.completed","transfer.failed","transfer.recoverable","transfer.refunded"]}</code> returns:</p>
+<pre><code class="language-json">{&quot;id&quot;:133,&quot;url&quot;:&quot;https://webhook.site/a772b5f5-...&quot;,&quot;secret&quot;:&quot;ae8b2675191053bca52f0a84350763b590526da4c2d2dfb7e471882c8abe55b9&quot;,&quot;events&quot;:[...],&quot;isActive&quot;:true,&quot;createdAt&quot;:&quot;2026-06-30T14:30:22.854Z&quot;}
+</code></pre>
+<p><strong>Docs (<code>api-reference/webhooks</code>):</strong> "secret: HMAC-SHA256 signing secret prefixed with <code>whsec_</code>." The returned secret is bare hex with <strong>no <code>whsec_</code> prefix</strong>.</p>
+<p><strong>Impact:</strong> An agent that follows the docs and prepends <code>whsec_</code> (or expects it) will compute HMAC with the wrong key and reject every webhook; an agent that strips a non-existent <code>whsec_</code> prefix will also mismatch. Additionally, <code>isActive:true</code> is returned without any URL reachability verification (the URL was a fresh, unverified webhook.site endpoint), so a mis-configured secret + unverified URL = a silently broken webhook pipeline that the integrator believes is healthy.</p>
+<p><strong>Proposed fix:</strong> Either prefix the secret with <code>whsec_</code> as documented, or update the docs to state the secret is bare hex. Verify webhook URL reachability before setting <code>isActive:true</code> (emit <code>MH_050</code> for unreachable URLs).</p>
+<hr />
+<h3>F13 — Webhook HMAC verifier in docs is broken: server signs raw body but example verifies parsed JSON; timingSafeEqual lacks length guard</h3>
+<p><strong>Severity: High (security / integration)</strong></p>
+<p><strong>Repro (devnet, real webhook delivery to webhook.site for transfer 479):</strong> MultiHopper delivered 4 signed events (<code>quote_created</code>, <code>phase_changed</code> ×2, <code>processing</code>), each with header <code>x-mh-signature</code>. Verifying with the endpoint secret (bare hex, see F12):<br />
+- HMAC-SHA256 over the <strong>raw body</strong> → <strong>matches</strong> <code>x-mh-signature</code> for all 4 events.<br />
+- HMAC-SHA256 over <strong>parsed-then-re-serialized JSON</strong> (canonical, <code>sort_keys</code>) → <strong>mismatches</strong> for <code>quote_created</code> and <code>processing</code> (key order/content differs); matches only for the trivial <code>phase_changed</code> body.</p>
+<p><strong>Docs (<code>api-reference/webhooks/events</code>):</strong> verifier example <code>verifyWebhook(req.body, signature, whsec_secret)</code> with <code>createHmac('sha256', secret).update(payload).digest('hex')</code> and <code>crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))</code>.</p>
+<p><strong>Bugs:</strong><br />
+1. The example passes <code>req.body</code> (a <strong>parsed object</strong> in Express). <code>.update(parsedObject)</code> stringifies to <code>[object Object]</code> (or, if a JSON middleware re-stringifies, to JSON with a different key order) → HMAC ≠ server signature → <strong>every legitimate webhook is rejected</strong>. The server signs the <strong>raw request body</strong>; the verifier must use <code>req.rawBody</code>, not <code>req.body</code>.<br />
+2. <code>crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))</code> has <strong>no length check</strong>. Node's <code>timingSafeEqual</code> throws <code>RangeError</code> when buffers differ in length. A malformed/short <code>x-mh-signature</code> crashes the handler (DoS per delivery) and exposes a timing oracle (crash vs no-crash).</p>
+<p><strong>Evidence:</strong> <code>evidence/webhook_events.json</code> (4 events with bodies + signatures).</p>
+<p><strong>Impact:</strong> An agent that copy-pastes the documented verifier either rejects every webhook (availability) or crashes on malformed signatures (DoS). The event-driven recovery path (see F1) is broken for the integrator.</p>
+<p><strong>Proposed fix:</strong> Verify HMAC over the <strong>raw body</strong>; document that explicitly. Add <code>if (a.length !== b.length) return false;</code> before <code>timingSafeEqual</code>. Fix the example to use <code>req.rawBody</code>.</p>
+<hr />
+<h3>F14 — Webhook signature header is <code>x-mh-signature</code>, not the documented <code>x-multihopper-signature</code></h3>
+<p><strong>Severity: Medium (documentation blocker / integration)</strong></p>
+<p><strong>Repro (devnet):</strong> delivered webhook headers include <code>x-mh-signature: 2156e337...</code> and <code>x-mh-event: transfer.quote_created</code>. <strong>Docs (<code>api-reference/webhooks/events</code>):</strong> "Header name: <code>x-multihopper-signature</code>."</p>
+<p><strong>Impact:</strong> An agent that reads <code>req.headers['x-multihopper-signature']</code> (as documented) gets <code>undefined</code> → either skips verification (insecure) or rejects the event. The actual headers are <code>x-mh-signature</code> (signature) and <code>x-mh-event</code> (event type, also undocumented).</p>
+<p><strong>Proposed fix:</strong> Update docs: signature header = <code>x-mh-signature</code>, event-type header = <code>x-mh-event</code>.</p>
+<hr />
+<h3>F15 — Webhook payload shape is undocumented and lacks any event/idempotency identifier</h3>
+<p><strong>Severity: Medium (documentation blocker / reliability)</strong></p>
+<p><strong>Repro (devnet, real payloads):</strong><br />
+- <code>transfer.quote_created</code>: <code>{status, createdAt, expiresAt, externalId, transferId, fundingStrategy, supportBundleId}</code><br />
+- <code>transfer.processing</code>: <code>{status, amountRaw, tokenMint, updatedAt, externalId, transferId, previousStatus, supportBundleId}</code><br />
+- <code>transfer.phase_changed</code>: <code>{at, phase, transferId}</code></p>
+<p>No <code>eventId</code>, no <code>deliveryId</code>, no sequence number, no retry flag.</p>
+<p><strong>Docs:</strong> no example payload, no field definitions, no dedupe guidance.</p>
+<p><strong>Impact:</strong> The retry schedule (5 attempts: 30s, 5m, 30m, 2h) is at-least-once. Without an <code>eventId</code>, an agent cannot deduplicate redeliveries → double-processing (e.g., double-credit on <code>transfer.completed</code>, double-rescue on <code>transfer.recoverable</code>). Different events also carry inconsistent fields (<code>at</code> vs <code>createdAt</code>/<code>updatedAt</code>; <code>phase_changed</code> has no <code>status</code>).</p>
+<p><strong>Proposed fix:</strong> Document the payload shape per event and add an <code>eventId</code> (+ delivery attempt count) for dedupe.</p>
+<hr />
+<h3>F16 — <code>amountRaw</code>/<code>amountTokens</code>/<code>tokenDecimals</code> consistency is not validated</h3>
+<p><strong>Severity: High (fund safety / validation gap)</strong></p>
+<p><strong>Repro (devnet, <code>POST /transfers</code>):</strong><br />
+- <code>amountRaw="100000000"</code> (0.1 SOL at decimals=9), <code>amountTokens="5.0"</code> (claims 5 SOL), <code>tokenDecimals=9</code> → <strong>200 <code>status=quote</code></strong>, response preserves both <code>amountRaw=100000000</code> and <code>amountTokens=5.0</code>.<br />
+- <code>amountRaw="100000000"</code>, <code>amountTokens="0.1"</code>, <code>tokenDecimals=6</code> (raw would be 100 tokens at 6 decimals, but amountTokens says 0.1) → <strong>200 <code>status=quote</code></strong>.</p>
+<p><strong>Docs (<code>api-reference/transfers/create</code>):</strong> "amountRaw is the base-unit integer string; amountTokens is the human-readable decimal representation. Together with tokenDecimals they should be consistent." No error code for inconsistency is documented (and none is returned).</p>
+<p><strong>Impact:</strong> An agent that assembles these fields from different sources (amountRaw from a ledger, amountTokens from a UI, decimals from a registry) can create a transfer where the on-chain amount (<code>amountRaw</code>) and the displayed amount (<code>amountTokens</code>) disagree, with no error. Downstream consumers trusting <code>amountTokens</code> will be wrong; actual moved funds follow <code>amountRaw</code>. Fund-safety-relevant validation gap.</p>
+<p><strong>Proposed fix:</strong> Validate <code>amountRaw == amountTokens × 10^tokenDecimals</code> and return a dedicated error on mismatch.</p>
+<hr />
+<h3>F17 — Validation errors return generic <code>BAD_REQUEST</code>, not the documented <code>MH_011</code>/<code>MH_013</code>; <code>MH_016</code> is undocumented</h3>
+<p><strong>Severity: Medium (documentation / error-handling)</strong></p>
+<p><strong>Repro (devnet, <code>POST /transfers</code>):</strong><br />
+- invalid <code>recipientWallet</code> → <code>400 BAD_REQUEST: recipientWallet: String must contain at least 32 character(s)</code> (docs say <code>MH_011</code>).<br />
+- <code>hops=2</code> → <code>400 BAD_REQUEST: hops: Number must be greater than or equal to 3</code> (docs say <code>MH_013</code>).<br />
+- <code>hops=11</code> → <code>400 BAD_REQUEST: hops: Number must be less than or equal to 10</code> (docs say <code>MH_013</code>).<br />
+- <code>arrivalSeconds=-5</code> → <code>400 BAD_REQUEST: arrivalSeconds: Number must be greater than or equal to 60</code> (docs say <code>MH_014</code> for hop-count minimum).<br />
+- <code>amountRaw="1"</code> → <code>400 MH_016: amountRaw must exceed totalFlatFeeLamports for SOL transfers (would yield non-positive hopAmount)</code> — <strong>MH_016 is not in the documented error table</strong> (docs list <code>MH_012</code> for "amount below minimum").<br />
+- <code>arrivalSeconds=60, hops=7</code> → <code>400 MH_014: "Arrival time below minimum for hop count — Minimum 140s for 7 hops (20s per hop)"</code> — the hop-count formula (<code>hops × 20s</code>) is only revealed in this error message, not in the API docs (see F11).</p>
+<p><strong>Impact:</strong> Agents that branch on <code>MH_011</code>/<code>MH_013</code> (as documented) miss format-validation errors (which arrive as <code>BAD_REQUEST</code> with a field-specific message). The error envelope is inconsistent: semantic errors use <code>{error:{code:"MH_XXX",message}}</code>, format errors use <code>{error:{code:"BAD_REQUEST",message:"field: rule"}}</code>. <code>MH_016</code> is undocumented and its message leaks internal logic ("exceed totalFlatFeeLamports", "non-positive hopAmount"). <code>MH_010</code> likewise leaks the pricing source ("No raydium pool").</p>
+<p><strong>Proposed fix:</strong> Return the documented <code>MH_011</code>/<code>MH_013</code> codes for wallet/hops validation (or update docs to say format errors are <code>BAD_REQUEST</code>). Document <code>MH_016</code>. Standardize the error envelope and avoid leaking internal field/PR names.</p>
+<hr />
+<h3>F18 — All hops complete but transfer never settles; no API unwrap/settle endpoint</h3>
+<p><strong>Severity: High (fund safety / agentic reliability)</strong></p>
+<p><strong>Repro (devnet, transfer 479):</strong> full deploy (5 txs confirmed) + all 4 hops executed on-chain (<code>progress.hopsCompleted=4/4</code>, <code>signatures.hops</code> has 4 hop signatures), yet <code>GET /transfers/479</code> returns <code>status=active, phase=executing, completedAt=null, lastError=null, recovery=null</code> indefinitely. No terminal state is reached. (<code>expiresAt</code> has passed; <code>recovery</code> still null.)</p>
+<p><strong>Docs (<code>protocol/route-lifecycle</code>):</strong> "After the final hop, the last recipient submits <code>unwrap</code> (SPL) or <code>unwrap_sol</code> (SOL). The program burns wrapper tokens and releases original tokens from the vault. The route is then settled." The API reference has <strong>no <code>unwrap</code>/<code>settle</code> endpoint</strong>, and the agentic integration guide never mentions it.</p>
+<p><strong>Impact:</strong> Even when every hop executes successfully, the transfer does not reach <code>completed</code>/<code>settled</code> unless the final recipient separately submits an on-chain <code>unwrap</code> instruction — not exposed through the API and not in the agentic guide. An agent polling <code>GET /transfers/:id</code> for <code>completed</code> waits forever after <code>hops=N/N</code>; the principal remains locked in the vault (wrapper tokens minted, never burned). This is a second, distinct fund-lock failure mode alongside F1, and it occurs on the <strong>happy path</strong> (all hops succeed), not just edge cases.</p>
+<p><strong>Proposed fix:</strong> Expose an <code>unwrap</code>/<code>settle</code> API step (or have the keeper auto-unwrap for the recipient), and document that the recipient must call it after the final hop. Make <code>status=completed</code> reachable purely via the documented API flow.</p>
+<hr />
+<h2>Notes / related work (not claimed by us)</h2>
+<p>The following were also observed on devnet but appear already reported by other<br />
+submitters (we do not claim priority): per-transfer <code>totalFlatFeeLamports=0</code> vs<br />
+<code>usage.totalFlatFeeEarned</code> non-zero (fee inconsistency); inconsistent error<br />
+envelope (<code>MH_XXX</code> nested vs <code>BAD_REQUEST</code> flat vs Fastify 500); create returns<br />
+<code>status=quote</code> not <code>awaiting_signature</code>; undocumented <code>resume.*</code> fields;<br />
+webhook event-list mismatch (9 vs 13 vs backend-accepted 12).</p>
+<h2>Responsible testing</h2>
+<p>All testing was performed on MultiHopper devnet with a <code>mh_test_</code> key and devnet<br />
+test funds. No mainnet requests, no live funds, no disclosure of findings before<br />
+MultiHopper review. All logs in <code>evidence/</code> are sanitized (no private keys, seed<br />
+phrases, or API keys).</p></body></html>

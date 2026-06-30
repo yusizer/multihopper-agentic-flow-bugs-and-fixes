@@ -1,0 +1,10 @@
+.env
+.venv/
+venv/
+__pycache__/
+*.pyc
+node_modules/
+b17-multihopper-video/out/
+b17-multihopper-video/public/*.wav
+b17-multihopper-video/public/*.mp3
+*.log

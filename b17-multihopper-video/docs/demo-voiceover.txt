@@ -1,0 +1,19 @@
+Break it before users do. I responsibly tested MultiHopper's agentic transfer flow on devnet — a reproducible Python harness, eighteen unique findings, real on-chain evidence.
+
+The documented agent flow: create a transfer, prepare the bundle, sign and broadcast in strict order, confirm-broadcast twice, then poll for a terminal state.
+
+On the happy path, transfer four-seventy-six deploys cleanly. Keeper funding, two route-init, orchestrator, and session transactions all confirm on Solana devnet — five real signatures, submitted in order.
+
+Then it stalls. GET transfers four-seventy-six: status active, phase executing, zero of five hops, no last error, no recovery — and the expiry has already passed.
+
+Recovery eventually says can-rescue true, with one hundred eleven million lamports rescuable. I sign the rescue transaction, it confirms on-chain — then rescue-confirm fails: MH-zero-eighty-three, Custom three-zero-one-two. A false promise.
+
+Transfer four-seventy-nine is worse: all four hops complete, yet status stays active, phase executing, completed-at null. It never settles. No unwrap endpoint exists.
+
+The webhook verifier in the docs is broken. The server signs the raw body — the example verifies parsed JSON and mismatches. The header is x-m-h-signature, not x-multihopper-signature.
+
+Intermittent five-hundreds on every GET endpoint leak the internal SQL query — api-keys, integrations, webhook URLs — an information disclosure on top of a reliability bug.
+
+Create accepts amount-raw for zero point one SOL alongside amount-tokens five point zero — inconsistent inputs, no validation, status two hundred.
+
+Eighteen findings: one critical, five high, eight medium, four low — all reproduced on devnet, all unique against six public competitors. Legit devnet testing, a reproducible harness, and a full report. Break it before users do.
