@@ -2,9 +2,9 @@
 
 **Bounty:** Break It Before Users Do: MultiHopper Agentic Flow Bugs & Fixes (Superteam Earn / MultiHopper / Enigma Fund)
 **Environment:** MultiHopper devnet only (`https://devnet.multihopper.com/api/v1`, `mh_test_` API key, Solana devnet). No mainnet, no live funds.
-**Contact:** @<YOUR_HANDLE> (Telegram / Twitter)
+**Contact:** @yusif102 (Telegram)
 **Repo:** https://github.com/yusizer/multihopper-agentic-flow-bugs-and-fixes
-**Demo video:** <LINK_TO_DEMO_VIDEO>
+**Demo video:** https://youtu.be/ed5UGcI1SXg
 
 ---
 
