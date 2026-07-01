@@ -13,9 +13,9 @@ all reproduced on devnet with real on-chain evidence, all unique vs the 6 public
 competitor submissions. Demo video included.
 
 ## Links (fill in before submitting)
-- **Report (Google Doc, public):** https://docs.google.com/document/d/1yHJicXhMUojyMv1e1pPa8h5E4vGemLTIDbaOXGQS3b4/edit?usp=sharing
+- **Report (Google Doc, public):** https://docs.google.com/document/d/1zBhDBIk05E7QujkXF_0pmP--tTBnH9oDEBKfBx6OP48/edit?usp=sharing
 - **Repo:** https://github.com/yusizer/multihopper-agentic-flow-bugs-and-fixes
-- **Demo video:** https://youtu.be/ed5UGcI1SXg
+- **Demo video:** https://youtu.be/roKjio6PHi8
 
 ## Top findings
 - **F1 (Critical, fund-safety):** Stuck hops — `recovery.canRescue=true` is a

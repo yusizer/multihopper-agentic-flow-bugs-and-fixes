@@ -57,6 +57,6 @@ See memory `b17-bug-candidates` for the full deduped list and devnet verificatio
 - [x] Phase 0: research + plan + onboarding (devnet `mh_test_` key obtained via dashboard)
 - [x] Phase 1: harness happy path (run_transfer.py, 5 txs confirmed on devnet)
 - [x] Phase 2: systematic testing (angles A→E, 18 findings F1–F18, evidence/ captured)
-- [x] Phase 3: demo video (https://youtu.be/ed5UGcI1SXg, 152s, voiceover + captions)
+- [x] Phase 3: demo video (https://youtu.be/roKjio6PHi8, 152s, voiceover + captions)
 - [x] Phase 4: write-up (findings/DRAFT.md, SUBMISSION.docx, public Google Doc report)
 - [ ] Phase 5: submit (deadline 2026-07-10)
