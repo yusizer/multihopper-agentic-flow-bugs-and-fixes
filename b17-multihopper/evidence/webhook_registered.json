@@ -1,0 +1,19 @@
+{
+  "uuid": "a772b5f5-a1d7-44dd-91a1-c71f1d2a6d33",
+  "url": "https://webhook.site/a772b5f5-a1d7-44dd-91a1-c71f1d2a6d33",
+  "secret": "b2d9430a95fd6a36cbccc018957d8641549eb666115d9bb5d78d7d800801be95",
+  "id": 134,
+  "events": [
+    "transfer.quote_created",
+    "transfer.deposit_confirmed",
+    "transfer.processing",
+    "transfer.phase_changed",
+    "transfer.hop_complete",
+    "transfer.completed",
+    "transfer.failed",
+    "transfer.recoverable",
+    "transfer.refunded",
+    "transfer.rescued",
+    "transfer.rent_reclaimed"
+  ]
+}

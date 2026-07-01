@@ -260,9 +260,9 @@ const FindingsSummary: React.FC = () => {
   const op = interpolate(frame, [0, 14], [0, 1], { extrapolateRight: "clamp" });
   const rows = [
     { sev: "Critical", count: "1", items: "F1 rescue false promise · Custom 3012", color: RED },
-    { sev: "High", count: "5", items: "F2 500/SQL leak · F13 webhook verifier · F16 amount · F18 never settles · F8 MCP", color: AMBER },
-    { sev: "Medium", count: "8", items: "F3 F4 F5 F7 F9 F12 F15 F17", color: ACCENT },
-    { sev: "Low / Doc", count: "4", items: "F6 F10 F11 + notes", color: MUTED },
+    { sev: "High", count: "4", items: "F2 500/SQL leak · F13 webhook verifier · F16 amount · F18 never settles", color: AMBER },
+    { sev: "Medium", count: "11", items: "F3 F4 F5 F6 F7 F8 F9 F12 F14 F15 F17", color: ACCENT },
+    { sev: "Low / Doc", count: "2", items: "F10 F11", color: MUTED },
   ];
   const vis = (i: number) => interpolate(frame, [i * 24, i * 24 + 16], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   return (
@@ -344,7 +344,7 @@ const FinalCard: React.FC = () => {
           Legit devnet (mh_test_) · reproducible harness · 18 unique findings
         </div>
         <div style={{ fontFamily: MONO, fontSize: 17, color: MUTED, marginTop: 6, textAlign: "center", lineHeight: 1.7 }}>
-          repo + report: github.com/yusif/b17-multihopper · all testing on devnet, no live funds
+          repo + report: github.com/yusizer/multihopper-agentic-flow-bugs-and-fixes · all testing on devnet, no live funds
         </div>
       </div>
     </AbsoluteFill>
@@ -433,7 +433,7 @@ const NEVER_LINES: TermLine[] = [
 // Shot 7 — WEBHOOK (F13/F14, transfer 479 events)
 const WEBHOOK_LINES: TermLine[] = [
   { text: '$ POST /api/v1/webhooks  { url, events:["transfer.completed",...] }', kind: "prompt" },
-  { text: '<- 200  { "id":133, "secret":"b2d9430a...", "isActive":true }', kind: "json" },
+  { text: '<- 200  { "id":134, "secret":"b2d9430a...", "isActive":true }', kind: "json" },
   { text: '   NO "whsec_" prefix (docs say prefixed)        <- F12', kind: "warn" },
   { text: "", kind: "plain" },
   { text: "delivered event: transfer.quote_created  (transferId 479)", kind: "plain" },

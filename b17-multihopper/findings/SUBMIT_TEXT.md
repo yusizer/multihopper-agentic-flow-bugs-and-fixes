@@ -8,7 +8,7 @@ Responsible testing of the MultiHopper agentic transfer flow on **devnet only**
 (`mh_test_` key, Solana devnet). A reproducible Python harness drives the
 documented `create → prepare → sign/broadcast → confirm-broadcast → monitor`
 flow end-to-end, plus targeted probes for recovery, webhook, MCP, fee, and
-validation surfaces. **18 unique findings** (1 Critical, 5 High, 8 Medium, 4 Low),
+validation surfaces. **18 unique findings** (1 Critical, 4 High, 11 Medium, 2 Low),
 all reproduced on devnet with real on-chain evidence, all unique vs the 6 public
 competitor submissions. Demo video included.
 
@@ -47,6 +47,16 @@ avoid every area already covered by public competitors (CORS, double-funding
 race, blockhash budget, TS sign-overwrite, /funding/confirm mismatch, fee
 inconsistency, status=quote, resume.*, webhook events 9-vs-13, webhook
 URL-no-verification, payout.completed rejection).
+
+## Coverage & skills
+- **8 suggested testing areas:** all covered — see report § "Coverage of the 8
+  suggested testing areas", including Idempotency-Key (MH_070 + duplicate /
+  conflicting-retry behavior, evidence/idempotency_probe.txt).
+- **Severity mix:** 1 Critical · 4 High · 11 Medium · 2 Low (F1/F2/F13/F16/F18
+  are fund-safety / security / reliability; F5/F8/F9/F10/F11/F14/F15 are
+  documentation / integration blockers).
+- **Skills:** Solana devnet · AI-agent harness (MCP / agentic integration) ·
+  Security/QA findings · Backend.
 
 ## Responsible testing
 Devnet only, no mainnet, no live funds. No public disclosure before MultiHopper

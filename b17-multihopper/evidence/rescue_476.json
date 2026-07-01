@@ -1,0 +1,196 @@
+{
+  "before": {
+    "id": 476,
+    "externalId": "b17-1782823378-d03c7a",
+    "supportBundleId": "NYMY-476-5304",
+    "tokenMint": "So11111111111111111111111111111111111111112",
+    "tokenSymbol": "SOL",
+    "amountRaw": "100000000",
+    "amountTokens": "0.1",
+    "sourceOwner": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5",
+    "recipientWallet": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5",
+    "fundingStrategy": "direct_orchestration",
+    "hops": 7,
+    "arrivalSeconds": 300,
+    "pricingTier": "standard",
+    "percentFeeBps": 5,
+    "percentFeeRaw": "49975",
+    "totalFlatFeeLamports": 0,
+    "recipientReceivesRaw": "99950025",
+    "status": "active",
+    "isTest": true,
+    "quotedAt": "2026-06-30T12:43:44.410Z",
+    "completedAt": null,
+    "expiresAt": "2026-06-30T13:13:44.409Z",
+    "createdAt": "2026-06-30T12:43:44.410Z",
+    "phase": "executing",
+    "progress": {
+      "hopsCompleted": 0,
+      "hopsTotal": 5
+    },
+    "lastError": null,
+    "recovery": {
+      "canRescue": true,
+      "rescuableLamports": 111316960,
+      "rescuableAccounts": [
+        {
+          "kind": "orchestrator_config",
+          "lamports": 1433760
+        },
+        {
+          "kind": "step_state",
+          "lamports": 11379721
+        },
+        {
+          "kind": "step_state",
+          "lamports": 15363276
+        },
+        {
+          "kind": "step_state",
+          "lamports": 29186922
+        },
+        {
+          "kind": "step_state",
+          "lamports": 1976640
+        },
+        {
+          "kind": "step_state",
+          "lamports": 51976641
+        }
+      ],
+      "canReclaimRent": false,
+      "reclaimableLamports": 0
+    },
+    "signatures": {
+      "routeInit": [
+        "3ShSCD5BhwQAxxDEdpcehuVP59Uui4bqqY1PXw5uroZucNCEW8SFnafbhUU3Yuk5eZgNR22WJxbks1DeULdC5wiH"
+      ],
+      "sessionInit": [],
+      "hops": []
+    }
+  },
+  "rescue_prepare": {
+    "rescueTxs": [
+      {
+        "base64": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAQAFDtc8Bu6mAFlhVe1xxby6ZN+3+SL6K4Jtw561VLpeABaEsojdb4JJZkdN/wrxK3YcQ9lMj+JGF0j5CFjtL9KgP9Liv1ETLy4oFXECrrsrDDw3MSDakHCM3tcGJaYITCnu/V6F32bT7B23t9M0mawVBGrJIMhxOz8PGYP0eIw3pWdTbXsf3wTVuHNhNnul8i+OHZNFXdxj6Nx5J+7lGuFnGOr9b85jHfVLxHpG19Mld+ga5vl6r3BLsWLuqApHd2K5OhqFCzkxO2E2DV8tbHqws+yFq05vrC6LXBcOEbgB+p/VPnpNdZx3fMrtFelJOOTEMR7fv8ox0ryy5IC15S90aeo+hn51RiQWcsjFKVvB7lYOjmhHYZ1b4TFxjx9OclT2g+Pe4pEvdd/IHca67Y8tfVr4pkAYiKtQX8UnuMkRaYQCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGm4hX/quBhPtof2NGGMA12sQ53BrrO1WYoPAAAAAAAQbd9uHXZaGT2cvhRs7reawctIXtX1s3kTqM9YV+/wCpjJclj04kifG7PRApFI4NgwtaE5na/xCEBI572Nvp+FnHCgTO3myOj4eHXTkMFWUmb1mQP0VuP05hKCG7RD/pVwUJBQAAAQIKKXvbJqdm8DAVNstarOfktPjR+tYrfHKprerWOEm72EkFVoImsiSRxaUACQUAAAEDCil72yanZvAwFTbLWqzn5LT40frWK3xyqa3q1jhJu9hJBVaCJrIkkcWlAQkFAAABBAope9smp2bwMBU2y1qs5+S0+NH61it8cqmt6tY4SbvYSQVWgiayJJHFpQIJBQAAAQUKKXvbJqdm8DAVNstarOfktPjR+tYrfHKprerWOEm72EkFVoImsiSRxaUDCQoAAAEGCwcIDA0KKZn3TPMXwU4FNstarOfktPjR+tYrfHKprerWOEm72EkFVoImsiSRxaUEAA==",
+        "partialSigners": []
+      }
+    ],
+    "recentBlockhash": "EPxzZpiuYXS3twkhmGXVNmuve3r57TGowKqDrZHPj2k6",
+    "lastValidBlockHeight": 461059837,
+    "rescuable": {
+      "totalLamports": 111316960,
+      "accounts": [
+        {
+          "kind": "orchestrator_config",
+          "lamports": 1433760
+        },
+        {
+          "kind": "step_state",
+          "lamports": 11379721
+        },
+        {
+          "kind": "step_state",
+          "lamports": 15363276
+        },
+        {
+          "kind": "step_state",
+          "lamports": 29186922
+        },
+        {
+          "kind": "step_state",
+          "lamports": 1976640
+        },
+        {
+          "kind": "step_state",
+          "lamports": 51976641
+        }
+      ]
+    }
+  },
+  "rescue_confirm_error": {
+    "code": "MH_083",
+    "status": 400,
+    "message": "Provided signatures do not match prepared bundle \u2014 RESCUE_TX_FAILED: gcKR4yHQRvXVY5taspsz7nKH9C3eHdK8sf51gXtAby4B1Hbq7gQdgh4fw94HkzbMJcdz7FpjXVR1aPs4NkGK2GT: {\"InstructionError\":[4,{\"Custom\":3012}]}",
+    "body": {
+      "error": {
+        "code": "MH_083",
+        "message": "Provided signatures do not match prepared bundle \u2014 RESCUE_TX_FAILED: gcKR4yHQRvXVY5taspsz7nKH9C3eHdK8sf51gXtAby4B1Hbq7gQdgh4fw94HkzbMJcdz7FpjXVR1aPs4NkGK2GT: {\"InstructionError\":[4,{\"Custom\":3012}]}",
+        "requestId": "93c36f12-b214-0c8b-a708-11f87ed2e9b0"
+      }
+    },
+    "rejectedSigs": [
+      "gcKR4yHQRvXVY5taspsz7nKH9C3eHdK8sf51gXtAby4B1Hbq7gQdgh4fw94HkzbMJcdz7FpjXVR1aPs4NkGK2GT"
+    ]
+  },
+  "after": {
+    "id": 476,
+    "externalId": "b17-1782823378-d03c7a",
+    "supportBundleId": "NYMY-476-5304",
+    "tokenMint": "So11111111111111111111111111111111111111112",
+    "tokenSymbol": "SOL",
+    "amountRaw": "100000000",
+    "amountTokens": "0.1",
+    "sourceOwner": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5",
+    "recipientWallet": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5",
+    "fundingStrategy": "direct_orchestration",
+    "hops": 7,
+    "arrivalSeconds": 300,
+    "pricingTier": "standard",
+    "percentFeeBps": 5,
+    "percentFeeRaw": "49975",
+    "totalFlatFeeLamports": 0,
+    "recipientReceivesRaw": "99950025",
+    "status": "active",
+    "isTest": true,
+    "quotedAt": "2026-06-30T12:43:44.410Z",
+    "completedAt": null,
+    "expiresAt": "2026-06-30T13:13:44.409Z",
+    "createdAt": "2026-06-30T12:43:44.410Z",
+    "phase": "executing",
+    "progress": {
+      "hopsCompleted": 0,
+      "hopsTotal": 5
+    },
+    "lastError": null,
+    "recovery": {
+      "canRescue": true,
+      "rescuableLamports": 111316960,
+      "rescuableAccounts": [
+        {
+          "kind": "orchestrator_config",
+          "lamports": 1433760
+        },
+        {
+          "kind": "step_state",
+          "lamports": 11379721
+        },
+        {
+          "kind": "step_state",
+          "lamports": 15363276
+        },
+        {
+          "kind": "step_state",
+          "lamports": 29186922
+        },
+        {
+          "kind": "step_state",
+          "lamports": 1976640
+        },
+        {
+          "kind": "step_state",
+          "lamports": 51976641
+        }
+      ],
+      "canReclaimRent": false,
+      "reclaimableLamports": 0
+    },
+    "signatures": {
+      "routeInit": [
+        "3ShSCD5BhwQAxxDEdpcehuVP59Uui4bqqY1PXw5uroZucNCEW8SFnafbhUU3Yuk5eZgNR22WJxbks1DeULdC5wiH"
+      ],
+      "sessionInit": [],
+      "hops": []
+    }
+  }
+}

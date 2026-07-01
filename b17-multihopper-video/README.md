@@ -1,10 +1,10 @@
 # b17-multihopper-video
 
 Remotion composition for the MultiHopper "Break It Before Users Do" bounty demo
-video (~110s, 1920×1080, 30fps). Built with the same pipeline as
-`../casper3643-video` / `../agentledger-video`. All on-screen signatures, error
-codes, and IDs are REAL devnet evidence from `../b17-multihopper/evidence/` —
-nothing is invented.
+video (~152s, 1920×1080, 30fps, with voiceover + word-aligned captions). Built
+with the same pipeline as `../casper3643-video` / `../agentledger-video`. All
+on-screen signatures, error codes, and IDs are REAL devnet evidence from
+`../b17-multihopper/evidence/` — nothing is invented.
 
 ## What's here
 
@@ -16,7 +16,8 @@ nothing is invented.
 - `scripts/make_captions.py` — placeholder captions from `docs/demo-voiceover.txt`.
 - `scripts/align_captions.py` — faster-whisper word-align (run AFTER voiceover).
 - `scripts/make-voiceover-split.mjs` — split Yusif's recording into 10 segments.
-- `docs/demo-voiceover.txt` — voiceover script (English, ~110s, ~140 wpm).
+- `docs/demo-voiceover.txt` — voiceover script (English, ~152s, ~140 wpm).
+- `public/voiceover.mp3` — final voiceover (ElevenLabs "Josh" TTS, 150s).
 
 ## Real evidence shown on screen
 
@@ -63,16 +64,16 @@ New-Item -ItemType Junction -Path node_modules -Target ..\..\..\githubbounty\age
 If the junction cannot be created, run `npm install` inside this folder instead
 (same deps as `package.json`).
 
-## Render (no voiceover yet — captions only)
+## Render (voiceover + captions already wired — `HAS_VOICE = true`)
 
 ```powershell
 cd b17-multihopper-video
 npx remotion render MultiHopperDemo out/multihopper-demo.mp4 --concurrency=3
 ```
 
-Output: `out/multihopper-demo.mp4` (~110s).
+Output: `out/multihopper-demo.mp4` (~152s).
 
-## Add Yusif's voiceover (optional, recommended)
+## Re-render after editing on-screen evidence
 
 1. Record yourself reading `docs/demo-voiceover.txt` (one take, ~110s, ~140 wpm,
    pauses between the 10 paragraphs). Save as `public/voiceover-yusif.wav`
@@ -95,8 +96,8 @@ Output: `out/multihopper-demo.mp4` (~110s).
 
 - Terminal shots render the captured devnet evidence (real tx hashes / error
   codes from `../b17-multihopper/evidence/`), not a live screen recording.
-- The video has no audio until Yusif records the voiceover; captions carry the
-  narration meanwhile.
+- Voiceover is ElevenLabs TTS ("Josh"); captions are word-aligned via
+  faster-whisper (`scripts/align_captions.py`).
 - All testing was on MultiHopper devnet with a `mh_test_` key and devnet test
   funds — no mainnet, no live funds. API key and private key are redacted on
   screen.

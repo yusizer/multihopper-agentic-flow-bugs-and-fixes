@@ -1,0 +1,141 @@
+webhook.site requests: 14
+
+--- request 0: event=transfer.quote_created ---
+body[:200]: {"status":"quote","createdAt":"2026-06-30T15:06:19.357Z","expiresAt":"2026-06-30T15:36:19.354Z","externalId":"b17-1782831932-1246f2","transferId":479,"fundingStrategy":"direct_orchestration","supportB
+x-mh-signature: 2156e337c4a4066b446ac2f55fb4439977f3e05e5bb8a0b9aa84ba6618f28874
+HMAC(raw body)      = 2156e337c4a4066b446ac2f55fb4439977f3e05e5bb8a0b9aa84ba6618f28874
+match raw body      = True
+HMAC(canonical json)= 11d7c5000fee4c0f65a4226f12ba745f144943b0ef28af9c87c5b69bc9587ee0
+match canonical     = False
+payload keys        = ['status', 'createdAt', 'expiresAt', 'externalId', 'transferId', 'fundingStrategy', 'supportBundleId']  (eventId? False)
+W2: lengths equal -> timingSafeEqual ok
+
+--- request 1: event=transfer.phase_changed ---
+body[:200]: {"at":"2026-06-30T15:06:42.010Z","phase":"active","transferId":479}
+x-mh-signature: 20945c3c6a49189cc614cb6fe44833f1590501d937cdf7c2047b90cc27cf5b5a
+HMAC(raw body)      = 20945c3c6a49189cc614cb6fe44833f1590501d937cdf7c2047b90cc27cf5b5a
+match raw body      = True
+HMAC(canonical json)= 20945c3c6a49189cc614cb6fe44833f1590501d937cdf7c2047b90cc27cf5b5a
+match canonical     = True
+payload keys        = ['at', 'phase', 'transferId']  (eventId? False)
+W2: lengths equal -> timingSafeEqual ok
+
+--- request 2: event=transfer.phase_changed ---
+body[:200]: {"at":"2026-06-30T15:06:32.173Z","phase":"processing","transferId":479}
+x-mh-signature: 976e4a313505695ef33ac983607161700780995adcaa2e0a43c0d54ead8964c9
+HMAC(raw body)      = 976e4a313505695ef33ac983607161700780995adcaa2e0a43c0d54ead8964c9
+match raw body      = True
+HMAC(canonical json)= 976e4a313505695ef33ac983607161700780995adcaa2e0a43c0d54ead8964c9
+match canonical     = True
+payload keys        = ['at', 'phase', 'transferId']  (eventId? False)
+W2: lengths equal -> timingSafeEqual ok
+
+--- request 3: event=transfer.processing ---
+body[:200]: {"status":"processing","amountRaw":"100000000","tokenMint":"So11111111111111111111111111111111111111112","updatedAt":"2026-06-30T15:06:32.118Z","externalId":"b17-1782831932-1246f2","transferId":479,"p
+x-mh-signature: 26ec7d1937c7a1c4d23d0352dd5f8aefebcd8b59074be1d09b94e0c2ba46c9c0
+HMAC(raw body)      = 26ec7d1937c7a1c4d23d0352dd5f8aefebcd8b59074be1d09b94e0c2ba46c9c0
+match raw body      = True
+HMAC(canonical json)= 8a680625a1d4357c228bf6b9b0f7326ae0f5b0c7e1988bc92be7dc68f2078d1f
+match canonical     = False
+payload keys        = ['status', 'amountRaw', 'tokenMint', 'updatedAt', 'externalId', 'transferId', 'previousStatus', 'supportBundleId']  (eventId? False)
+W2: lengths equal -> timingSafeEqual ok
+
+--- request 4: event=transfer.hop_complete ---
+body[:200]: {"at":"2026-06-30T15:15:46.136Z","stepType":"transfer","stepIndex":0,"externalId":"b17-1782831296-589c2c","transferId":478,"txSignature":"4dbDRi13GH21LvKMPDqj9nMMN8PhuGwikcPQi4Pwt6BtbgoJwJesdQJrm2ngdi
+x-mh-signature: 0946e6e2455409912c9bf8e818a597902abcb7b7eb6c0a04f558092cc84267f4
+HMAC(raw body)      = 0946e6e2455409912c9bf8e818a597902abcb7b7eb6c0a04f558092cc84267f4
+match raw body      = True
+HMAC(canonical json)= 13fc87fd5abb558fe4cd95dcebe1902c4b2327106e78ebe7faf694e4c1e8def7
+match canonical     = False
+payload keys        = ['at', 'stepType', 'stepIndex', 'externalId', 'transferId', 'txSignature', 'supportBundleId']  (eventId? False)
+W2: lengths equal -> timingSafeEqual ok
+
+--- request 5: event=transfer.hop_complete ---
+body[:200]: {"at":"2026-06-30T15:16:19.983Z","stepType":"transfer","stepIndex":1,"externalId":"b17-1782831296-589c2c","transferId":478,"txSignature":"XRWuZ8q2dAn7PSj5qBjWDzvb8Te5Acc5oS72BXKiHQdVZ7Cs6JY6udFebSishw
+x-mh-signature: 5978ffc21b6bb7c47ce78c2f078d71524db5187110faf29c4aee9c518a74ccb8
+HMAC(raw body)      = 5978ffc21b6bb7c47ce78c2f078d71524db5187110faf29c4aee9c518a74ccb8
+match raw body      = True
+HMAC(canonical json)= 1f688481695f35fb78201ac4f473c1f4f70aecfa033fcce89c95b210965425e1
+match canonical     = False
+payload keys        = ['at', 'stepType', 'stepIndex', 'externalId', 'transferId', 'txSignature', 'supportBundleId']  (eventId? False)
+W2: lengths equal -> timingSafeEqual ok
+
+--- request 6: event=transfer.hop_complete ---
+body[:200]: {"at":"2026-06-30T15:16:12.797Z","stepType":"transfer","stepIndex":0,"externalId":"b17-1782831932-1246f2","transferId":479,"txSignature":"3S4BdtMFE59PYmpJ26V3YiBxd6weR4Af71ZtKnTycQVidEFKMNtWrmYJyn6M5n
+x-mh-signature: e0854e5c2c293ee4fcbd94d368fa2123014462f0982020edadde7961b4e08b8f
+HMAC(raw body)      = e0854e5c2c293ee4fcbd94d368fa2123014462f0982020edadde7961b4e08b8f
+match raw body      = True
+HMAC(canonical json)= 5dfd09b6f496825bc3dcbb63d31e3d5e80ac9f3eefc2e8365d401977447fc556
+match canonical     = False
+payload keys        = ['at', 'stepType', 'stepIndex', 'externalId', 'transferId', 'txSignature', 'supportBundleId']  (eventId? False)
+W2: lengths equal -> timingSafeEqual ok
+
+--- request 7: event=transfer.hop_complete ---
+body[:200]: {"at":"2026-06-30T15:16:40.570Z","stepType":"transfer","stepIndex":2,"externalId":"b17-1782831296-589c2c","transferId":478,"txSignature":"3dCQBXNrMzfDkn79Kf1cGV3tkKKJJbkXJ89QLdWZW1FXhqgtjFH2zvYypKSQLf
+x-mh-signature: 72a9a849bff01858177b1f68fe0d6805df1cb0caf878890411547552943b4961
+HMAC(raw body)      = 72a9a849bff01858177b1f68fe0d6805df1cb0caf878890411547552943b4961
+match raw body      = True
+HMAC(canonical json)= abe7e76ff0e75660b02ac238aa1f4491c87a1d15d453f312126070e82daa1314
+match canonical     = False
+payload keys        = ['at', 'stepType', 'stepIndex', 'externalId', 'transferId', 'txSignature', 'supportBundleId']  (eventId? False)
+W2: lengths equal -> timingSafeEqual ok
+
+--- request 8: event=transfer.hop_complete ---
+body[:200]: {"at":"2026-06-30T15:16:33.809Z","stepType":"transfer","stepIndex":1,"externalId":"b17-1782831932-1246f2","transferId":479,"txSignature":"4NwNaeugwkcP5KzGLMEsPxAog4xWaE2M4uMhbUHePbjRevSFek8gmhmXJnJ3iD
+x-mh-signature: 264605a7fa6bdea73f167038152f45c3a6f4d29e20048b18fb129b1457287ad6
+HMAC(raw body)      = 264605a7fa6bdea73f167038152f45c3a6f4d29e20048b18fb129b1457287ad6
+match raw body      = True
+HMAC(canonical json)= 9792bce0533cd9da09ef7ddc21f7e8af119d32697fa0359d076074858bd9dc4d
+match canonical     = False
+payload keys        = ['at', 'stepType', 'stepIndex', 'externalId', 'transferId', 'txSignature', 'supportBundleId']  (eventId? False)
+W2: lengths equal -> timingSafeEqual ok
+
+--- request 9: event=transfer.hop_complete ---
+body[:200]: {"at":"2026-06-30T15:16:54.818Z","stepType":"transfer","stepIndex":2,"externalId":"b17-1782831932-1246f2","transferId":479,"txSignature":"5jdoM8E8a7mUXZ8JvXH5qWtiwh7ghHEaQhPpnJL1wt1tfj4DPhzEhoN6K5qEuu
+x-mh-signature: 6ac6c9dff267c8c1a0390266048f5893dec08b3d470a98f56e0f5a3f49efe6b0
+HMAC(raw body)      = 6ac6c9dff267c8c1a0390266048f5893dec08b3d470a98f56e0f5a3f49efe6b0
+match raw body      = True
+HMAC(canonical json)= dbd29291a627b89db976efcc5bdf9a63790f659ddcbd33a3facb233b0e1a3e2a
+match canonical     = False
+payload keys        = ['at', 'stepType', 'stepIndex', 'externalId', 'transferId', 'txSignature', 'supportBundleId']  (eventId? False)
+W2: lengths equal -> timingSafeEqual ok
+
+--- request 10: event=transfer.quote_created ---
+body[:200]: {"status":"quote","createdAt":"2026-06-30T15:22:27.425Z","expiresAt":"2026-06-30T15:52:27.424Z","externalId":"edge-dec-1782832894","transferId":481,"fundingStrategy":"direct_orchestration","supportBun
+x-mh-signature: 1bcef07c793e3aa57d13ef068e4c6f4b68cff9a831b8675e5219c7d587d9b9de
+HMAC(raw body)      = 1bcef07c793e3aa57d13ef068e4c6f4b68cff9a831b8675e5219c7d587d9b9de
+match raw body      = True
+HMAC(canonical json)= 16b484ba25953918e5233fd4b18d222e552750def64f2e3a1500410f182b4d6c
+match canonical     = False
+payload keys        = ['status', 'createdAt', 'expiresAt', 'externalId', 'transferId', 'fundingStrategy', 'supportBundleId']  (eventId? False)
+W2: lengths equal -> timingSafeEqual ok
+
+--- request 11: event=transfer.quote_created ---
+body[:200]: {"status":"quote","createdAt":"2026-06-30T15:22:20.166Z","expiresAt":"2026-06-30T15:52:20.164Z","externalId":"edge-amt-1782832894","transferId":480,"fundingStrategy":"direct_orchestration","supportBun
+x-mh-signature: 8ca8819ab9e8a485f580272563d1864fb8b705393afb3711b2657fb824987776
+HMAC(raw body)      = 8ca8819ab9e8a485f580272563d1864fb8b705393afb3711b2657fb824987776
+match raw body      = True
+HMAC(canonical json)= 6d4aa8b38816ef791432f44cc3342e092dbc3bc8b76c39eb4378e268da0496ed
+match canonical     = False
+payload keys        = ['status', 'createdAt', 'expiresAt', 'externalId', 'transferId', 'fundingStrategy', 'supportBundleId']  (eventId? False)
+W2: lengths equal -> timingSafeEqual ok
+
+--- request 12: event=transfer.quote_created ---
+body[:200]: {"status":"quote","createdAt":"2026-06-30T15:23:59.356Z","expiresAt":"2026-06-30T15:53:59.355Z","externalId":"edge-dec-1782832987","transferId":483,"fundingStrategy":"direct_orchestration","supportBun
+x-mh-signature: e18f0b81d27b425a395c7a262bd8b8b11c6d77a494782543eee1f93c86355626
+HMAC(raw body)      = e18f0b81d27b425a395c7a262bd8b8b11c6d77a494782543eee1f93c86355626
+match raw body      = True
+HMAC(canonical json)= 1af3c1c03c9bd0c9e5b5245f7a1713cf087adca780a83ed11766d70de069e694
+match canonical     = False
+payload keys        = ['status', 'createdAt', 'expiresAt', 'externalId', 'transferId', 'fundingStrategy', 'supportBundleId']  (eventId? False)
+W2: lengths equal -> timingSafeEqual ok
+
+--- request 13: event=transfer.quote_created ---
+body[:200]: {"status":"quote","createdAt":"2026-06-30T15:23:53.343Z","expiresAt":"2026-06-30T15:53:53.330Z","externalId":"edge-amt-1782832987","transferId":482,"fundingStrategy":"direct_orchestration","supportBun
+x-mh-signature: 65c4f3ad154748fefe9b95a3c30aaf8a88301145ff37f20f4e13632233140de9
+HMAC(raw body)      = 65c4f3ad154748fefe9b95a3c30aaf8a88301145ff37f20f4e13632233140de9
+match raw body      = True
+HMAC(canonical json)= 9382a8a946af480122a524fe9c814cee80e117145028aa45534746b4d649a158
+match canonical     = False
+payload keys        = ['status', 'createdAt', 'expiresAt', 'externalId', 'transferId', 'fundingStrategy', 'supportBundleId']  (eventId? False)
+W2: lengths equal -> timingSafeEqual ok

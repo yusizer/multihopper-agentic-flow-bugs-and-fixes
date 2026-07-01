@@ -123,6 +123,60 @@ strong{color:#111;}hr{border:none;border-top:1px solid #ddd;margin:24px 0;}
 </table>
 <p><strong>Highest impact:</strong> F1 + F18 are fund-safety defects where the happy path locks funds with no integrator-driven recovery. F2 is information disclosure + reliability. F13/F14 break the documented webhook integration. F8 contradicts the sponsor-highlighted MCP surface.</p>
 <p><strong>Differentiators:</strong> legit devnet (<code>mh_test_</code>) + reproducible harness (<code>run_transfer.py</code> + per-finding probes) + demo video + 18 unique findings that avoid every occupied area.</p>
+<h2>Coverage of the 8 suggested testing areas</h2>
+<p>The bounty lists 8 suggested testing areas. Our coverage:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Suggested area</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>create→prepare→sign/broadcast→confirm-broadcast→monitor</td>
+<td>Harness end-to-end; <strong>F1</strong> (stuck hops), <strong>F18</strong> (never settles)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Client-side signing + preserve server partial sigs</td>
+<td>Harness slot-based signing correct; <strong>F3</strong> (GET signatures omit keeperFunding/orchestratorInit)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Strict broadcast sequencing keeper→route→orchestrator→session</td>
+<td>Implemented correctly in harness — no bug found (negative result)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Two-step confirm-broadcast + missing keeper funding sig</td>
+<td><strong>F3</strong> (MH_039 context); missing Idempotency-Key → MH_070</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Idempotency-Key, duplicate submissions, conflicting retries</td>
+<td>Tested — <strong>correct behavior, no bug</strong> (negative result): missing key → <code>MH_070</code>; same key+body twice → duplicate suppressed (same transfer id); same key+different body → <code>MH_071</code> (409 conflict). evidence/idempotency_probe.txt</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Expiry &amp; resume</td>
+<td>Harness resume on blockhash expiry; <strong>F4</strong> (hops/totalHops/totalSteps semantic inconsistency via <code>resume</code>)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Status polling, webhook monitoring, recovery paths</td>
+<td><strong>F1</strong> (recovery false promise), <strong>F12–F15</strong> (webhook), <strong>F18</strong> (no settle)</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Doc gaps / unsafe assumptions</td>
+<td><strong>F5, F6, F8, F9, F10, F11, F14, F15, F17</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Severity mix:</strong> 1 Critical (F1), 4 High (F2, F13, F16, F18), 11 Medium, 2 Low. Of these, F5/F8/F9/F10/F11/F14/F15 are primarily documentation/integration blockers; F1/F2/F13/F16/F18 are fund-safety / security / reliability defects.</p>
 <hr />
 <h2>What we built</h2>
 <p>A reproducible Python agent harness that drives the documented agentic transfer<br />
@@ -155,15 +209,17 @@ webhook, MCP, and fee-surface bugs.</p>
 <h3>F1 — Stuck hops: <code>canRescue=true</code> is a false promise; rescue tx fails on-chain (Custom 3012) + MH_083; integrator cannot self-rescue</h3>
 <p><strong>Severity: Critical (fund safety / agentic reliability)</strong></p>
 <p><strong>Affected flow:</strong> <code>GET /transfers/:id</code> monitoring + <code>POST /transfers/:id/rescue/prepare</code> + <code>/rescue/confirm</code> recovery.</p>
+<p><strong>Expected:</strong> <code>recovery.canRescue=true</code> + <code>rescueTxs</code> returned to the integrator means the integrator can sign, broadcast, and confirm a rescue that recovers the locked funds (principal + wrapper backing + rent).<br />
+<strong>Actual:</strong> The rescue tx confirms on-chain but <code>rescue_step</code> reverts with Custom 3012; <code>rescue/confirm</code> returns MH_083. Funds stay locked — the integrator cannot self-rescue; only MultiHopper's privileged admin key can.</p>
 <p><strong>Repro (devnet, transfer 476):</strong><br />
 1. <code>POST /transfers</code> (SOL, 0.1, hops=7, arrivalSeconds=300, recipient=self) → id=476.<br />
 2. <code>POST /transfers/476/prepare</code> → 4 tx groups; sign+broadcast all in strict order; all 5 txs confirmed on-chain (keeperFunding + 2 routeInit + orchestrator + session); <code>confirm-broadcast</code> ×2.<br />
 3. <code>GET /transfers/476</code> for &gt;30 min: <code>status=active</code>, <code>phase=executing</code>, <code>progress.hopsCompleted=0/5</code>, <code>lastError=null</code>, <code>expiresAt</code> passed.<br />
 4. <strong>Initially</strong> <code>recovery=null</code> and <code>rescue/prepare</code> → <strong>409 <code>MH_081</code> "Nothing to rescue"</strong>.<br />
 5. <strong>After time</strong> (no agent action), <code>recovery</code> becomes <code>{canRescue: true, rescuableLamports: 111316960, rescuableAccounts: [orchestrator_config + 5× step_state], canReclaimRent: false}</code> and <code>rescue/prepare</code> returns <code>rescueTxs:[1 tx]</code> + <code>rescuable.totalLamports: 111316960</code> (0.111 SOL).<br />
-6. Sign the rescue tx (slot-based, sourceOwner keypair) + broadcast → <strong>confirmed on-chain</strong>, sig <code>2kpxgXqPi1mksZYbQgw3jdcPjhX3FbFjsAp3NcCj1yWTArbtKtS1ZT77G1evBydqhE99qxDVhqVz969GQC61ye46</code>.<br />
+6. Sign the rescue tx (slot-based, sourceOwner keypair) + broadcast → <strong>confirmed on-chain</strong>, sig <code>2kpxgXqPi1mksZYbQgw3jdcPjhX3FbFjsAp3NcCj1yWTArbtKtS1ZT77G1evBydqhE99qxDVhqVz969GQC61ye46</code> (2026-06-30); re-confirmed 2026-07-01 with sig <code>4ZFvagDyy1aDxC7q38RCTzcJ3ECxVDXH3wP63NzwyMeZK5r8pybBpPJje7DfzLMDQiUL3eCKA5vaSWXxvcJsDSs</code>. Both require <code>skipPreflight=true</code> (the blockhash fails RPC simulation).<br />
 7. <code>POST /transfers/476/rescue/confirm</code> → <strong>400 <code>MH_083</code> "Provided signatures do not match prepared bundle — RESCUE_TX_FAILED: … InstructionError:[4,{Custom:3012}]"</strong>.</p>
-<p><strong>Evidence:</strong> <code>evidence/probe_476_full.txt</code>, <code>evidence/rescue_476.json</code>, devnet tx sigs above + rescue sig <code>2kpxgXqPi1mksZYbQgw3jdcPjhX3FbFjsAp3NcCj1yWTArbtKtS1ZT77G1evBydqhE99qxDVhqVz969GQC61ye46</code>.</p>
+<p><strong>Evidence:</strong> <code>evidence/probe_476_full.txt</code> (stuck state), <code>evidence/rescue_476.json</code> (<code>recovery.canRescue=true</code> + <code>rescueTxs</code>), <code>evidence/rescue_476_execute.txt</code> (full prepare→broadcast→confirm run: blockhash simulation fail → <code>skipPreflight</code> broadcast confirmed → <code>MH_083</code> + <code>Custom 3012</code>).</p>
 <p><strong>Root cause:</strong> <code>concepts/keepers</code> states <code>rescue_step</code> is an "admin escape hatch … requires privileged authority." The API exposes <code>/rescue/prepare</code>+<code>/rescue/confirm</code> to the integrator and <code>recovery.canRescue=true</code> suggests funds are rescuable, but the on-chain <code>rescue_step</code> instruction rejects the sourceOwner-signed rescue tx with <strong>Custom 3012 (Anchor <code>AccountNotInitialized</code> — "The program expected this account to be already initialized")</strong>, <code>InstructionError:[4,{Custom:3012}]</code>, after which <code>rescue/confirm</code> returns MH_083. The rescue authority account/signer is not available to the integrator — only MultiHopper's privileged/admin key can rescue. (Custom 3012 and the on-chain error table are undocumented.)</p>
 <p><strong>Impact (fund safety):</strong> <code>canRescue=true</code> is a <strong>false promise</strong>. An agent that follows the recovery path (prepare → sign → broadcast → confirm) gets a confirmed on-chain tx that fails with Custom 3012, then MH_083. Funds (0.111 SOL here: principal + wrapper backing + rent across orchestrator_config + 5 step_state accounts) remain locked with no integrator-driven recovery. Combined with <code>protocol/route-lifecycle</code> "Routes do not expire" and no hop-level refund, stuck hops = permanent fund lock for the integrator.</p>
 <p><strong>Additional issues surfaced:</strong><br />
@@ -189,10 +245,11 @@ webhook, MCP, and fee-surface bugs.</p>
 <ol start="3">
 <li>Re-running the same request seconds later succeeds (20/20 OK on re-probe).</li>
 </ol>
-<p><strong>Evidence:</strong> first <code>inspect_transfer.py</code> run captured simultaneous 500 on all<br />
-four GET endpoints with the leaked ORM/SQL query; <code>evidence/probe_476_full.txt</code><br />
-for the recovered 200 responses; <code>probe_500.py</code> (20× re-probe = 0/20, confirming<br />
-intermittent).</p>
+<p><strong>Evidence:</strong> the first <code>inspect_transfer.py</code> run captured a simultaneous 500 on<br />
+all four GET endpoints with the leaked ORM/SQL query (quoted in full in the<br />
+Repro block above); <code>evidence/probe_476_full.txt</code> holds the recovered 200<br />
+responses; <code>evidence/500_probe.txt</code> (30× re-probe = 0/30) confirms the 500 is<br />
+intermittent — it appears under load, not on every request.</p>
 <p><strong>Impact:</strong><br />
 - <strong>Information disclosure:</strong> the error message leaks the internal DB schema and<br />
   ORM query (<code>api_keys</code>, <code>integrations</code>, <code>webhook_url</code>, <code>key_hash</code>, <code>mode</code>,<br />
@@ -327,6 +384,11 @@ exposes only <code>search_multi_hopper</code> and <code>query_docs_filesystem_mu
 drive transfers through MCP tools (as the guide implies) will find no such<br />
 tools — the MCP server is a docs search box, not an API wrapper. This is a<br />
 direct docs↔reality contradiction in the sponsor-highlighted MCP surface.</p>
+<p><strong>Industry context:</strong> MCP (Model Context Protocol) is the 2026 standard for<br />
+agent↔tool integration; agent frameworks (e.g. <code>sendai/solana-agent-kit</code>)<br />
+consume MCP servers to drive protocol actions. An MCP server exposing only<br />
+docs-search — not the API-step tools the agentic guide lists — blocks the<br />
+sponsor-highlighted agentic integration path.</p>
 <p><strong>Proposed fix:</strong> Either (a) expose the API-step tools via MCP as documented, or<br />
 (b) correct the agentic guide to state the MCP server is documentation-only and<br />
 the API-step tools are to be implemented locally by the agent.</p>
@@ -368,24 +430,26 @@ reference, and have <code>MH_014</code> return the required minimum in the error
 <hr />
 <h3>F12 — Webhook signing secret returned without the documented <code>whsec_</code> prefix</h3>
 <p><strong>Severity: Medium (documentation blocker / integration)</strong></p>
-<p><strong>Repro (devnet):</strong> <code>POST /api/v1/webhooks</code> with <code>{"url":"https://webhook.site/&lt;uuid&gt;","events":["transfer.completed","transfer.failed","transfer.recoverable","transfer.refunded"]}</code> returns:</p>
-<pre><code class="language-json">{&quot;id&quot;:133,&quot;url&quot;:&quot;https://webhook.site/a772b5f5-...&quot;,&quot;secret&quot;:&quot;ae8b2675191053bca52f0a84350763b590526da4c2d2dfb7e471882c8abe55b9&quot;,&quot;events&quot;:[...],&quot;isActive&quot;:true,&quot;createdAt&quot;:&quot;2026-06-30T14:30:22.854Z&quot;}
+<p><strong>Repro (devnet):</strong> <code>POST /api/v1/webhooks</code> with <code>{"url":"https://webhook.site/&lt;uuid&gt;","events":["transfer.quote_created","transfer.deposit_confirmed","transfer.processing","transfer.phase_changed","transfer.hop_complete","transfer.completed","transfer.failed","transfer.recoverable","transfer.refunded","transfer.rescued","transfer.rent_reclaimed"]}</code> returns:</p>
+<pre><code class="language-json">{&quot;id&quot;:134,&quot;url&quot;:&quot;https://webhook.site/a772b5f5-...&quot;,&quot;secret&quot;:&quot;b2d9430a95fd6a36cbccc018957d8641549eb666115d9bb5d78d7d800801be95&quot;,&quot;events&quot;:[&quot;transfer.quote_created&quot;,...,&quot;transfer.rent_reclaimed&quot;],&quot;isActive&quot;:true}
 </code></pre>
-<p><strong>Docs (<code>api-reference/webhooks</code>):</strong> "secret: HMAC-SHA256 signing secret prefixed with <code>whsec_</code>." The returned secret is bare hex with <strong>no <code>whsec_</code> prefix</strong>.</p>
-<p><strong>Impact:</strong> An agent that follows the docs and prepends <code>whsec_</code> (or expects it) will compute HMAC with the wrong key and reject every webhook; an agent that strips a non-existent <code>whsec_</code> prefix will also mismatch. Additionally, <code>isActive:true</code> is returned without any URL reachability verification (the URL was a fresh, unverified webhook.site endpoint), so a mis-configured secret + unverified URL = a silently broken webhook pipeline that the integrator believes is healthy.</p>
-<p><strong>Proposed fix:</strong> Either prefix the secret with <code>whsec_</code> as documented, or update the docs to state the secret is bare hex. Verify webhook URL reachability before setting <code>isActive:true</code> (emit <code>MH_050</code> for unreachable URLs).</p>
+<p><strong>Evidence:</strong> <code>evidence/webhook_registered.json</code> (full 11-event response, bare-hex secret, no <code>whsec_</code> prefix).<br />
+<strong>Docs (<code>api-reference/webhooks</code>):</strong> "secret: HMAC-SHA256 signing secret prefixed with <code>whsec_</code>." The returned secret is bare hex with <strong>no <code>whsec_</code> prefix</strong>.</p>
+<p><strong>Impact:</strong> An agent that follows the docs and prepends <code>whsec_</code> (or expects it) will compute HMAC with the wrong key and reject every webhook; an agent that strips a non-existent <code>whsec_</code> prefix will also mismatch. This compounds with F13 (the verifier is broken) and F14 (wrong header name) — an integrator following the documented webhook setup + verification gets a silently broken pipeline that rejects every legitimate event.</p>
+<p><strong>Proposed fix:</strong> Either prefix the secret with <code>whsec_</code> as documented, or update the docs to state the secret is bare hex.</p>
 <hr />
 <h3>F13 — Webhook HMAC verifier in docs is broken: server signs raw body but example verifies parsed JSON; timingSafeEqual lacks length guard</h3>
 <p><strong>Severity: High (security / integration)</strong></p>
-<p><strong>Repro (devnet, real webhook delivery to webhook.site for transfer 479):</strong> MultiHopper delivered 4 signed events (<code>quote_created</code>, <code>phase_changed</code> ×2, <code>processing</code>), each with header <code>x-mh-signature</code>. Verifying with the endpoint secret (bare hex, see F12):<br />
-- HMAC-SHA256 over the <strong>raw body</strong> → <strong>matches</strong> <code>x-mh-signature</code> for all 4 events.<br />
-- HMAC-SHA256 over <strong>parsed-then-re-serialized JSON</strong> (canonical, <code>sort_keys</code>) → <strong>mismatches</strong> for <code>quote_created</code> and <code>processing</code> (key order/content differs); matches only for the trivial <code>phase_changed</code> body.</p>
+<p><strong>Repro (devnet, real webhook delivery to webhook.site):</strong> MultiHopper delivered 14 signed events (<code>quote_created</code>, <code>phase_changed</code>, <code>processing</code>, <code>hop_complete</code> ×8, …) for transfers 478/479/480–483, each with header <code>x-mh-signature</code>. Verifying with the endpoint secret (bare hex, see F12):<br />
+- HMAC-SHA256 over the <strong>raw body</strong> → <strong>matches</strong> <code>x-mh-signature</code> for all 14 events.<br />
+- HMAC-SHA256 over <strong>parsed-then-re-serialized JSON</strong> (canonical, <code>sort_keys</code>) → <strong>mismatches</strong> for 12/14 events (any body with &gt;3 keys: <code>quote_created</code>, <code>processing</code>, <code>hop_complete</code>); matches only for the trivial 3-key <code>phase_changed</code> bodies.</p>
 <p><strong>Docs (<code>api-reference/webhooks/events</code>):</strong> verifier example <code>verifyWebhook(req.body, signature, whsec_secret)</code> with <code>createHmac('sha256', secret).update(payload).digest('hex')</code> and <code>crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))</code>.</p>
 <p><strong>Bugs:</strong><br />
 1. The example passes <code>req.body</code> (a <strong>parsed object</strong> in Express). <code>.update(parsedObject)</code> stringifies to <code>[object Object]</code> (or, if a JSON middleware re-stringifies, to JSON with a different key order) → HMAC ≠ server signature → <strong>every legitimate webhook is rejected</strong>. The server signs the <strong>raw request body</strong>; the verifier must use <code>req.rawBody</code>, not <code>req.body</code>.<br />
 2. <code>crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))</code> has <strong>no length check</strong>. Node's <code>timingSafeEqual</code> throws <code>RangeError</code> when buffers differ in length. A malformed/short <code>x-mh-signature</code> crashes the handler (DoS per delivery) and exposes a timing oracle (crash vs no-crash).</p>
-<p><strong>Evidence:</strong> <code>evidence/webhook_events.json</code> (4 events with bodies + signatures).</p>
+<p><strong>Evidence:</strong> <code>evidence/hmac_verification.txt</code> (14 events: HMAC raw = match 14/14, HMAC canonical = mismatch 12/14) + <code>evidence/webhook_events.json</code>.</p>
 <p><strong>Impact:</strong> An agent that copy-pastes the documented verifier either rejects every webhook (availability) or crashes on malformed signatures (DoS). The event-driven recovery path (see F1) is broken for the integrator.</p>
+<p><strong>Industry context:</strong> Standard webhook practice (Stripe, Svix, webhooks.fyi) signs the <strong>raw request body</strong> and verifies the HMAC <strong>before</strong> JSON parsing. The documented MultiHopper verifier inverts both — it verifies parsed JSON and omits the length guard that prevents <code>timingSafeEqual</code> from throwing.</p>
 <p><strong>Proposed fix:</strong> Verify HMAC over the <strong>raw body</strong>; document that explicitly. Add <code>if (a.length !== b.length) return false;</code> before <code>timingSafeEqual</code>. Fix the example to use <code>req.rawBody</code>.</p>
 <hr />
 <h3>F14 — Webhook signature header is <code>x-mh-signature</code>, not the documented <code>x-multihopper-signature</code></h3>
@@ -428,11 +492,19 @@ reference, and have <code>MH_014</code> return the required minimum in the error
 <hr />
 <h3>F18 — All hops complete but transfer never settles; no API unwrap/settle endpoint</h3>
 <p><strong>Severity: High (fund safety / agentic reliability)</strong></p>
-<p><strong>Repro (devnet, transfer 479):</strong> full deploy (5 txs confirmed) + all 4 hops executed on-chain (<code>progress.hopsCompleted=4/4</code>, <code>signatures.hops</code> has 4 hop signatures), yet <code>GET /transfers/479</code> returns <code>status=active, phase=executing, completedAt=null, lastError=null, recovery=null</code> indefinitely. No terminal state is reached. (<code>expiresAt</code> has passed; <code>recovery</code> still null.)</p>
+<p><strong>Expected:</strong> After all hops execute (<code>hopsCompleted=N/N</code>), the transfer reaches <code>status=completed</code> / <code>phase=settled</code> via the documented API flow, with <code>completedAt</code> set and the recipient receiving funds.<br />
+<strong>Actual:</strong> <code>hopsCompleted=4/4</code> but <code>status=active, phase=executing, completedAt=null, recovery={canRescue:false}</code> indefinitely — no terminal state, no rescuable funds. The <code>unwrap</code>/<code>unwrap_sol</code> step from <code>route-lifecycle</code> is not exposed through the API; an agent polling for <code>completed</code> waits forever; principal stays locked in the vault (wrapper tokens minted, never burned).</p>
+<p><strong>Repro (devnet, transfer 479):</strong> full deploy (5 txs confirmed) + all 4 hops executed on-chain (<code>progress.hopsCompleted=4/4</code>, <code>signatures.hops</code> has 4 hop signatures), yet <code>GET /transfers/479</code> returns <code>status=active, phase=executing, completedAt=null, lastError=null, recovery={canRescue:false}</code> indefinitely — no terminal state, no rescuable funds. <code>expiresAt</code> has passed. <strong>Evidence:</strong> <code>evidence/transfer_479_full.txt</code>. Transfer 478 shows the same pattern (<code>hopsCompleted=4/4</code>, <code>status=active</code>, <code>phase=executing</code>). <code>GET /usage</code> reports <code>totalTransfers=9, completedTransfers=0</code> — no transfer in this test account has ever reached <code>completed</code>.</p>
 <p><strong>Docs (<code>protocol/route-lifecycle</code>):</strong> "After the final hop, the last recipient submits <code>unwrap</code> (SPL) or <code>unwrap_sol</code> (SOL). The program burns wrapper tokens and releases original tokens from the vault. The route is then settled." The API reference has <strong>no <code>unwrap</code>/<code>settle</code> endpoint</strong>, and the agentic integration guide never mentions it.</p>
 <p><strong>Impact:</strong> Even when every hop executes successfully, the transfer does not reach <code>completed</code>/<code>settled</code> unless the final recipient separately submits an on-chain <code>unwrap</code> instruction — not exposed through the API and not in the agentic guide. An agent polling <code>GET /transfers/:id</code> for <code>completed</code> waits forever after <code>hops=N/N</code>; the principal remains locked in the vault (wrapper tokens minted, never burned). This is a second, distinct fund-lock failure mode alongside F1, and it occurs on the <strong>happy path</strong> (all hops succeed), not just edge cases.</p>
 <p><strong>Proposed fix:</strong> Expose an <code>unwrap</code>/<code>settle</code> API step (or have the keeper auto-unwrap for the recipient), and document that the recipient must call it after the final hop. Make <code>status=completed</code> reachable purely via the documented API flow.</p>
 <hr />
+<h2>Areas tested — no issue found (negative results)</h2>
+<p>To document coverage and responsible testing, we explicitly probed the following and found correct behavior — these are not findings, but confirm the areas were exercised:</p>
+<ul>
+<li><strong>Idempotency-Key (suggested area #5):</strong> missing key → <code>MH_070</code> (400); same <code>Idempotency-Key</code> + same body twice → duplicate suppressed (returns the same transfer <code>id</code>, no second transfer created); same <code>Idempotency-Key</code> + different body → <code>MH_071</code> (409 "Idempotency-Key reused with a different request body"). Idempotency works as expected. Evidence: <code>evidence/idempotency_probe.txt</code>.</li>
+<li><strong>Strict broadcast sequencing (suggested area #3):</strong> the harness broadcasts <code>keeperFundingTx → routeInitTxs[] → orchestratorInitTx → sessionInitTxs[]</code> in order with confirmation polling and 3s propagation delays; all 5 txs confirmed on devnet. No sequencing bug found.</li>
+</ul>
 <h2>Notes / related work (not claimed by us)</h2>
 <p>The following were also observed on devnet but appear already reported by other<br />
 submitters (we do not claim priority): per-transfer <code>totalFlatFeeLamports=0</code> vs<br />

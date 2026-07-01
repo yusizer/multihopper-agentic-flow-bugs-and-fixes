@@ -8,7 +8,7 @@ Goal: show 3–4 high-impact findings reproduced on devnet with the harness.
 
 ## Scene 1 — F1: stuck hops + rescue false promise (60s)
 1. `python run_transfer.py` → create (id=N) → prepare → sign → broadcast → confirm-broadcast. All 5 txs confirmed on devnet.
-2. `GET /transfers/N` → `status=active, phase=executing, hops=0/4, lastError=null, recovery=null`.
+2. `GET /transfers/N` → `status=active, phase=executing, hops=0/5, lastError=null, recovery=null`.
 3. Wait/poll — hops never progress.
 4. `POST /transfers/N/rescue/prepare` → initially `MH_081`; later `recovery.canRescue=true, rescuableLamports=0.111 SOL` + `rescueTxs`.
 5. Sign + broadcast rescue tx → **confirmed on-chain** (sig shown).
@@ -30,7 +30,7 @@ Goal: show 3–4 high-impact findings reproduced on devnet with the harness.
 2. Narrate: "agent can create a transfer where on-chain amount and displayed amount disagree — no error."
 
 ## Closing (10s)
-- "17 findings (F1–F17), all reproduced on devnet with sanitized evidence. Repo + full report: <link>."
+- "18 findings (F1–F18), all reproduced on devnet with sanitized evidence. Repo + full report: <link>."
 
 ## Recording tips
 - Use OBS / Windows Game Bar (Win+G) / Camtasia.

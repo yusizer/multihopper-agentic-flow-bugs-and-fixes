@@ -1,0 +1,10 @@
+[amount mismatch (raw=0.1 SOL, tokens=5.0)] -> 200 status=quote amountRaw=100000000 amountTokens=5.0 decimals=None hops=7 arrival=300 recipient=FVBk7NDMnzBX
+[arrivalSeconds=60 hops=7 (min 140)] -> 400 MH_014: Arrival time below minimum for hop count — Minimum 140s for 7 hops (20s per hop)
+[unsupported mint (1111...)] -> 400 MH_010: Unsupported token mint — Unable to resolve USD price for 11111111111111111111111111111111: No raydium pool res
+[invalid recipient wallet] -> 400 BAD_REQUEST: recipientWallet: String must contain at least 32 character(s)
+[hops=2 (min 3)] -> 400 BAD_REQUEST: hops: Number must be greater than or equal to 3
+[hops=11 (max 10)] -> 400 BAD_REQUEST: hops: Number must be less than or equal to 10
+[amount below min (1 lamport)] -> 400 MH_016: amountRaw must exceed totalFlatFeeLamports for SOL transfers (would yield non-positive hopAmount) — amountRaw=
+[missing Idempotency-Key] -> 400 MH_070: Idempotency-Key header required for this mutation (8-64 chars, [a-zA-Z0-9._-])
+[decimals=6 but raw=100000000 (0.1 SOL)] -> 200 status=quote amountRaw=100000000 amountTokens=0.1 decimals=None hops=7 arrival=300 recipient=FVBk7NDMnzBX
+[negative arrivalSeconds] -> 400 BAD_REQUEST: arrivalSeconds: Number must be greater than or equal to 60

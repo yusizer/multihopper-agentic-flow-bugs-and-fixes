@@ -1,0 +1,284 @@
+
+=== GET /transfers/479 ===
+{
+  "id": 479,
+  "externalId": "b17-1782831932-1246f2",
+  "supportBundleId": "NYMY-479-7CB0",
+  "tokenMint": "So11111111111111111111111111111111111111112",
+  "tokenSymbol": "SOL",
+  "amountRaw": "100000000",
+  "amountTokens": "0.1",
+  "sourceOwner": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5",
+  "recipientWallet": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5",
+  "fundingStrategy": "direct_orchestration",
+  "hops": 7,
+  "arrivalSeconds": 300,
+  "pricingTier": "standard",
+  "percentFeeBps": 5,
+  "percentFeeRaw": "49975",
+  "totalFlatFeeLamports": 0,
+  "recipientReceivesRaw": "99950025",
+  "status": "active",
+  "isTest": true,
+  "quotedAt": "2026-06-30T15:06:19.357Z",
+  "completedAt": null,
+  "expiresAt": "2026-06-30T15:36:19.354Z",
+  "createdAt": "2026-06-30T15:06:19.357Z",
+  "phase": "executing",
+  "progress": {
+    "hopsCompleted": 4,
+    "hopsTotal": 4
+  },
+  "lastError": null,
+  "recovery": {
+    "canRescue": false,
+    "rescuableLamports": 0,
+    "rescuableAccounts": [],
+    "canReclaimRent": false,
+    "reclaimableLamports": 0
+  },
+  "signatures": {
+    "routeInit": [
+      "25Qfq7YaXirLPBncbuwDkne4EUrbTfya5wGCo84ncAagHLRnspXQQwntFVgnziG7VJPrB6BF6rf1wPPnR5dBkuys"
+    ],
+    "sessionInit": [],
+    "hops": [
+      "3S4BdtMFE59PYmpJ26V3YiBxd6weR4Af71ZtKnTycQVidEFKMNtWrmYJyn6M5ngHBdZLD16dgt2xe93HBQH7km5X",
+      "4NwNaeugwkcP5KzGLMEsPxAog4xWaE2M4uMhbUHePbjRevSFek8gmhmXJnJ3iDkcQXiY73Rigzxd8HcvfoPLjLiM",
+      "2C7iuh9RAQ2hxgS2yEMo3j2HmpUxCmKUiSbUMbPiG6pLYGn3wRNK4Y3HJSRExKA2SjgA4HxjpaZhC2ev8hWYKzfB",
+      "5jdoM8E8a7mUXZ8JvXH5qWtiwh7ghHEaQhPpnJL1wt1tfj4DPhzEhoN6K5qEuujXKNtr8dh7hbtmtWzoAwo7KZjM"
+    ]
+  }
+}
+
+=== GET /transfers (list, status=active) ===
+{
+  "items": [
+    {
+      "id": 479,
+      "externalId": "b17-1782831932-1246f2",
+      "supportBundleId": "NYMY-479-7CB0",
+      "tokenMint": "So11111111111111111111111111111111111111112",
+      "tokenSymbol": "SOL",
+      "amountRaw": "100000000",
+      "amountTokens": "0.1",
+      "sourceOwner": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5",
+      "recipientWallet": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5",
+      "fundingStrategy": "direct_orchestration",
+      "hops": 7,
+      "arrivalSeconds": 300,
+      "pricingTier": "standard",
+      "percentFeeBps": 5,
+      "percentFeeRaw": "49975",
+      "totalFlatFeeLamports": 0,
+      "recipientReceivesRaw": "99950025",
+      "status": "active",
+      "isTest": true,
+      "quotedAt": "2026-06-30T15:06:19.357Z",
+      "completedAt": null,
+      "expiresAt": "2026-06-30T15:36:19.354Z",
+      "createdAt": "2026-06-30T15:06:19.357Z",
+      "phase": "executing",
+      "progress": {
+        "hopsCompleted": 4,
+        "hopsTotal": 4
+      },
+      "lastError": null,
+      "recovery": {
+        "canRescue": false,
+        "rescuableLamports": 0,
+        "rescuableAccounts": [],
+        "canReclaimRent": false,
+        "reclaimableLamports": 0
+      },
+      "signatures": {
+        "routeInit": [
+          "25Qfq7YaXirLPBncbuwDkne4EUrbTfya5wGCo84ncAagHLRnspXQQwntFVgnziG7VJPrB6BF6rf1wPPnR5dBkuys"
+        ],
+        "sessionInit": [],
+        "hops": [
+          "3S4BdtMFE59PYmpJ26V3YiBxd6weR4Af71ZtKnTycQVidEFKMNtWrmYJyn6M5ngHBdZLD16dgt2xe93HBQH7km5X",
+          "4NwNaeugwkcP5KzGLMEsPxAog4xWaE2M4uMhbUHePbjRevSFek8gmhmXJnJ3iDkcQXiY73Rigzxd8HcvfoPLjLiM",
+          "2C7iuh9RAQ2hxgS2yEMo3j2HmpUxCmKUiSbUMbPiG6pLYGn3wRNK4Y3HJSRExKA2SjgA4HxjpaZhC2ev8hWYKzfB",
+          "5jdoM8E8a7mUXZ8JvXH5qWtiwh7ghHEaQhPpnJL1wt1tfj4DPhzEhoN6K5qEuujXKNtr8dh7hbtmtWzoAwo7KZjM"
+        ]
+      }
+    },
+    {
+      "id": 478,
+      "externalId": "b17-1782831296-589c2c",
+      "supportBundleId": "NYMY-478-C512",
+      "tokenMint": "So11111111111111111111111111111111111111112",
+      "tokenSymbol": "SOL",
+      "amountRaw": "100000000",
+      "amountTokens": "0.1",
+      "sourceOwner": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5",
+      "recipientWallet": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5",
+      "fundingStrategy": "direct_orchestration",
+      "hops": 7,
+      "arrivalSeconds": 300,
+      "pricingTier": "standard",
+      "percentFeeBps": 5,
+      "percentFeeRaw": "49975",
+      "totalFlatFeeLamports": 0,
+      "recipientReceivesRaw": "99950025",
+      "status": "active",
+      "isTest": true,
+      "quotedAt": "2026-06-30T14:55:42.325Z",
+      "completedAt": null,
+      "expiresAt": "2026-06-30T15:25:42.323Z",
+      "createdAt": "2026-06-30T14:55:42.325Z",
+      "phase": "executing",
+      "progress": {
+        "hopsCompleted": 4,
+        "hopsTotal": 4
+      },
+      "lastError": null,
+      "recovery": {
+        "canRescue": false,
+        "rescuableLamports": 0,
+        "rescuableAccounts": [],
+        "canReclai
+
+=== GET /transfers (list, all recent) ===
+{
+  "items": [
+    {
+      "id": 483,
+      "externalId": "edge-dec-1782832987",
+      "supportBundleId": "NYMY-483-A145",
+      "tokenMint": "So11111111111111111111111111111111111111112",
+      "tokenSymbol": null,
+      "amountRaw": "100000000",
+      "amountTokens": "0.1",
+      "sourceOwner": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5",
+      "recipientWallet": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5",
+      "fundingStrategy": "direct_orchestration",
+      "hops": 7,
+      "arrivalSeconds": 300,
+      "pricingTier": "premium",
+      "percentFeeBps": 50,
+      "percentFeeRaw": "497512",
+      "totalFlatFeeLamports": 14000,
+      "recipientReceivesRaw": "99488488",
+      "status": "quote",
+      "isTest": true,
+      "quotedAt": "2026-06-30T15:23:59.356Z",
+      "completedAt": null,
+      "expiresAt": "2026-06-30T15:53:59.355Z",
+      "createdAt": "2026-06-30T15:23:59.356Z",
+      "phase": "quoted",
+      "progress": {
+        "hopsCompleted": 0,
+        "hopsTotal": 4
+      },
+      "lastError": null,
+      "recovery": null,
+      "signatures": {
+        "routeInit": [],
+        "sessionInit": [],
+        "hops": []
+      }
+    },
+    {
+      "id": 482,
+      "externalId": "edge-amt-1782832987",
+      "supportBundleId": "NYMY-482-2F0E",
+      "tokenMint": "So11111111111111111111111111111111111111112",
+      "tokenSymbol": "SOL",
+      "amountRaw": "100000000",
+      "amountTokens": "5.0",
+      "sourceOwner": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5",
+      "recipientWallet": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5",
+      "fundingStrategy": "direct_orchestration",
+      "hops": 7,
+      "arrivalSeconds": 300,
+      "pricingTier": "standard",
+      "percentFeeBps": 5,
+      "percentFeeRaw": "49975",
+      "totalFlatFeeLamports": 0,
+      "recipientReceivesRaw": "99950025",
+      "status": "quote",
+      "isTest": true,
+      "quotedAt": "2026-06-30T15:23:53.343Z",
+      "completedAt": null,
+      "expiresAt": "2026-06-30T15:53:53.330Z",
+      "createdAt": "2026-06-30T15:23:53.343Z",
+      "phase": "quoted",
+      "progress": {
+        "hopsCompleted": 0,
+        "hopsTotal": 4
+      },
+      "lastError": null,
+      "recovery": null,
+      "signatures": {
+        "routeInit": [],
+        "sessionInit": [],
+        "hops": []
+      }
+    },
+    {
+      "id": 481,
+      "externalId": "edge-dec-1782832894",
+      "supportBundleId": "NYMY-481-5127",
+      "tokenMint": "So11111111111111111111111111111111111111112",
+      "tokenSymbol": null,
+      "amountRaw": "100000000",
+      "amountTokens": "0.1",
+      "sourceOwner": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5",
+      "recipientWallet": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5",
+      "fundingStrategy": "direct_orchestration",
+      "hops": 7,
+      "arrivalSeconds": 300,
+      "pricingTier": "premium",
+      "percentFeeBps": 50,
+      "percentFeeRaw": "497512",
+      "totalFlatFeeLamports": 14000,
+      "recipientReceivesRaw": "99488488",
+      "status": "quote",
+  
+
+=== GET /usage ===
+{
+  "totalTransfers": 9,
+  "completedTransfers": 0,
+  "failedTransfers": 0,
+  "totalVolumeRaw": "900000000",
+  "totalFlatFeeEarned": 111948,
+  "totalPayouts": 0,
+  "isTestMode": true
+}
+
+=== POST /transfers/estimate (auth probe) ===
+{
+  "tier": "standard",
+  "percentFeeBps": 5,
+  "percentFeeRaw": "49975",
+  "flatFeeLamportsPerHop": 0,
+  "totalFlatFeeLamports": 0,
+  "integratorPercentShare": "24987",
+  "integratorFlatShare": 0,
+  "usdEquivalent": 15,
+  "isTestMode": true,
+  "tokens": {
+    "amountRaw": "100000000",
+    "feeRaw": "49975",
+    "netDeliveredRaw": "99950025",
+    "decimals": 9
+  },
+  "sol": {
+    "requiredSolUpFrontLamports": 185403092,
+    "minTransferAmountLamports": 2039280,
+    "breakdown": {
+      "routeInitRentLamports": 22223280,
+      "orchestratorRentLamports": 18708480,
+      "ataRentLamports": 3326880,
+      "transactionFeesLamports": 50000,
+      "priorityFeesLamports": 0,
+      "protocolFlatFeeLamports": 0,
+      "screeningFeeLamports": 2000000
+    },
+    "refundableLamports": 22035360,
+    "netCostLamports": 163367732
+  }
+}

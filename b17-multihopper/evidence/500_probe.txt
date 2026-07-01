@@ -1,0 +1,34 @@
+[00] OK  status=active phase=executing hops=0/5
+[01] OK  status=active phase=executing hops=0/5
+[02] OK  status=active phase=executing hops=0/5
+[03] OK  status=active phase=executing hops=0/5
+[04] OK  status=active phase=executing hops=0/5
+[05] OK  status=active phase=executing hops=0/5
+[06] OK  status=active phase=executing hops=0/5
+[07] OK  status=active phase=executing hops=0/5
+[08] OK  status=active phase=executing hops=0/5
+[09] OK  status=active phase=executing hops=0/5
+[10] OK  status=active phase=executing hops=0/5
+[11] OK  status=active phase=executing hops=0/5
+[12] OK  status=active phase=executing hops=0/5
+[13] OK  status=active phase=executing hops=0/5
+[14] OK  status=active phase=executing hops=0/5
+[15] OK  status=active phase=executing hops=0/5
+[16] OK  status=active phase=executing hops=0/5
+[17] OK  status=active phase=executing hops=0/5
+[18] OK  status=active phase=executing hops=0/5
+[19] OK  status=active phase=executing hops=0/5
+[20] OK  status=active phase=executing hops=0/5
+[21] OK  status=active phase=executing hops=0/5
+[22] OK  status=active phase=executing hops=0/5
+[23] OK  status=active phase=executing hops=0/5
+[24] OK  status=active phase=executing hops=0/5
+[25] OK  status=active phase=executing hops=0/5
+[26] OK  status=active phase=executing hops=0/5
+[27] OK  status=active phase=executing hops=0/5
+[28] OK  status=active phase=executing hops=0/5
+[29] OK  status=active phase=executing hops=0/5
+
+SUMMARY: ok=30 500=0 other=0 of 30
+
+VERDICT (F2): transient HTTP 500 with SQL leak NOT reproduced in this 30-iteration window (0/30). All responses OK (status=active, phase=executing, hops=0/5). Prior captures of the 500/SQL-leak remain in earlier evidence; this run confirms it is intermittent/non-deterministic.

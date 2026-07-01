@@ -39,7 +39,8 @@ python run_transfer.py   # happy-path end-to-end on devnet
 - `sign.py` — Versioned (slot-based, preserves server partial sigs) + Legacy signing.
 - `broadcast.py` — strict-order broadcast, poll confirmed, 3s delays, resume.
 - `run_transfer.py` — happy-path end-to-end.
-- `tests/` — per-finding repro scripts (angle A/B/C/D/E).
+- `probe_*.py` — per-finding repro scripts (recovery, webhook, HMAC, wrong recipient, 500, edge, inspect).
+- `convert_submission.py` — DRAFT.md → SUBMISSION.html + SUBMISSION.docx converter.
 - `evidence/` — sanitized logs, tx sigs, screenshots.
 - `findings/` — report drafts.
 
@@ -53,10 +54,9 @@ python run_transfer.py   # happy-path end-to-end on devnet
 See memory `b17-bug-candidates` for the full deduped list and devnet verification steps.
 
 ## Status
-- [x] Phase 0: research + plan
-- [ ] Phase 0: onboarding (get devnet creds via t.me/multihopperbuilderportal)
-- [ ] Phase 1: harness happy path
-- [ ] Phase 2: systematic testing (angles A→E)
-- [ ] Phase 3: demo video
-- [ ] Phase 4: write-up
+- [x] Phase 0: research + plan + onboarding (devnet `mh_test_` key obtained via dashboard)
+- [x] Phase 1: harness happy path (run_transfer.py, 5 txs confirmed on devnet)
+- [x] Phase 2: systematic testing (angles A→E, 18 findings F1–F18, evidence/ captured)
+- [x] Phase 3: demo video (https://youtu.be/ed5UGcI1SXg, 152s, voiceover + captions)
+- [x] Phase 4: write-up (findings/DRAFT.md, SUBMISSION.docx, public Google Doc report)
 - [ ] Phase 5: submit (deadline 2026-07-10)

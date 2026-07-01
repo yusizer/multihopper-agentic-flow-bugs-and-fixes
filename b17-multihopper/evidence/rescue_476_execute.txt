@@ -1,0 +1,18 @@
+[state] status=active phase=executing recovery={'canRescue': True, 'rescuableLamports': 111316960, 'rescuableAccounts': [{'kind': 'orchestrator_config', 'lamports': 1433760}, {'kind': 'step_state', 'lamports': 11379721}, {'kind': 'step_state', 'lamports': 15363276}, {'kind': 'step_state', 'lamports': 29186922}, {'kind': 'step_state', 'lamports': 1976640}, {'kind': 'step_state', 'lamports': 51976641}], 'canReclaimRent': False, 'reclaimableLamports': 0}
+
+[attempt 1] rescueTxs=1 blockhash=DjaySoksUH
+[rescue] attempt 1 broadcast error: sendTransaction error: {'code': -32002, 'message': 'Transaction simulation failed: Blockhash not found', 'data': {'accou; re-prepare
+
+[attempt 2] rescueTxs=1 blockhash=FXRrAxwTFo
+[rescue] attempt 2 broadcast error: sendTransaction error: {'code': -32002, 'message': 'Transaction simulation failed: Blockhash not found', 'data': {'accou; re-prepare
+
+[attempt 3] rescueTxs=1 blockhash=EPxzZpiuYX
+[bc] sent sig=gcKR4yHQRvXVY5taspsz7nKH9C3eHdK8sf51gXtAby4B1Hbq7gQdgh4fw94HkzbMJcdz7FpjXVR1aPs4NkGK2GT
+[bc] confirmed=confirmed
+[rescue] broadcast [0] sig=gcKR4yHQRvXVY5taspsz7nKH9C3eHdK8sf51gXtAby4B1Hbq7gQdgh4fw94HkzbMJcdz7FpjXVR1aPs4NkGK2GT
+[rescue/confirm] ERROR MH_083 (400): Provided signatures do not match prepared bundle — RESCUE_TX_FAILED: gcKR4yHQRvXVY5taspsz7nKH9C3eHdK8sf51gXtAby4B1Hbq7gQdgh4fw94HkzbMJcdz7FpjXVR1aPs4NkGK2GT: {"InstructionError":[4,{"Custom":3012}]}
+[rescue/confirm] body: {"error": {"code": "MH_083", "message": "Provided signatures do not match prepared bundle \u2014 RESCUE_TX_FAILED: gcKR4yHQRvXVY5taspsz7nKH9C3eHdK8sf51gXtAby4B1Hbq7gQdgh4fw94HkzbMJcdz7FpjXVR1aPs4NkGK2GT: {\"InstructionError\":[4,{\"Custom\":3012}]}", "requestId": "93c36f12-b214-0c8b-a708-11f87ed2e9b0"}}
+[rescue/confirm] broadcast sigs that were rejected: ['gcKR4yHQRvXVY5taspsz7nKH9C3eHdK8sf51gXtAby4B1Hbq7gQdgh4fw94HkzbMJcdz7FpjXVR1aPs4NkGK2GT']
+
+[final] status=active phase=executing recovery={'canRescue': True, 'rescuableLamports': 111316960, 'rescuableAccounts': [{'kind': 'orchestrator_config', 'lamports': 1433760}, {'kind': 'step_state', 'lamports': 11379721}, {'kind': 'step_state', 'lamports': 15363276}, {'kind': 'step_state', 'lamports': 29186922}, {'kind': 'step_state', 'lamports': 1976640}, {'kind': 'step_state', 'lamports': 51976641}], 'canReclaimRent': False, 'reclaimableLamports': 0}
+Saved C:\Users\yusif\Desktop\projects\githubbounty\01-solana-agents-skills\b17-multihopper\evidence\rescue_476.json

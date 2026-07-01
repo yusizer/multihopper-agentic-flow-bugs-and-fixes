@@ -1,7 +1,5 @@
 .env
 __pycache__/
 *.pyc
-evidence/*
-!evidence/.gitkeep
 .venv/
 venv/

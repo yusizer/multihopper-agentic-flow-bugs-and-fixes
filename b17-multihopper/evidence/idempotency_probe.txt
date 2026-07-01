@@ -1,0 +1,56 @@
+[setup] base=https://devnet.multihopper.com/api/v1 wallet=FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5
+
+============================================================
+CASE (a): MISSING Idempotency-Key
+============================================================
+
+=== (a) missing key ===
+POST /transfers  HTTP 400
+Idempotency-Key: <MISSING>
+request body.externalId: idem-a-1782901884-4063d5  amountRaw: 100000000
+response: {"error": {"code": "MH_070", "message": "Idempotency-Key header required for this mutation (8-64 chars, [a-zA-Z0-9._-])", "requestId": "0f83dc12-00d8-afe5-57df-5d9bac4d7c69"}}
+
+============================================================
+CASE (b): SAME key + SAME body, twice
+============================================================
+
+=== (b) 1st call ===
+POST /transfers  HTTP 200
+Idempotency-Key: fixed-key-b-1782901884
+request body.externalId: idem-b-1782901884-5d29cd  amountRaw: 100000000
+response: {"id": 522, "externalId": "idem-b-1782901884-5d29cd", "supportBundleId": "NYMY-522-62B4", "tokenMint": "So11111111111111111111111111111111111111112", "tokenSymbol": "SOL", "amountRaw": "100000000", "amountTokens": "0.1", "sourceOwner": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5", "recipientWallet": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5", "fundingStrategy": "direct_orchestration", "hops": 7, "arrivalSeconds": 300, "pricingTier": "standard", "percentFeeBps": 5, "percentFeeRaw": "49975", "totalFlatFeeLamports": 0, "recipientReceivesRaw": "99950025", "status": "quote", "isTest": true, "quotedAt": "2026-07-01T10:32:11.094Z", "completedAt": null, "expiresAt": "2026-07-01T11:02:11.093Z",
+
+=== (b) 2nd call (same key+body) ===
+POST /transfers  HTTP 200
+Idempotency-Key: fixed-key-b-1782901884
+request body.externalId: idem-b-1782901884-5d29cd  amountRaw: 100000000
+response: {"id": 522, "hops": 7, "isTest": true, "status": "quote", "quotedAt": "2026-07-01T10:32:11.094Z", "amountRaw": "100000000", "createdAt": "2026-07-01T10:32:11.094Z", "expiresAt": "2026-07-01T11:02:11.093Z", "tokenMint": "So11111111111111111111111111111111111111112", "externalId": "idem-b-1782901884-5d29cd", "completedAt": null, "pricingTier": "standard", "sourceOwner": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5", "tokenSymbol": "SOL", "amountTokens": "0.1", "percentFeeBps": 5, "percentFeeRaw": "49975", "arrivalSeconds": 300, "fundingStrategy": "direct_orchestration", "recipientWallet": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5", "supportBundleId": "NYMY-522-62B4", "recipientReceivesRaw
+
+[b-result] id1=522 id2=522  same_id=True  status1=200 status2=200
+[b-verdict] DUPLICATE SUPPRESSED (returned same id)
+
+============================================================
+CASE (c): SAME key + DIFFERENT body (different externalId + amount)
+============================================================
+
+=== (c) 1st call ===
+POST /transfers  HTTP 200
+Idempotency-Key: fixed-key-c-1782901884
+request body.externalId: idem-c1-1782901884-b972f3  amountRaw: 100000000
+response: {"id": 523, "externalId": "idem-c1-1782901884-b972f3", "supportBundleId": "NYMY-523-C4E1", "tokenMint": "So11111111111111111111111111111111111111112", "tokenSymbol": "SOL", "amountRaw": "100000000", "amountTokens": "0.1", "sourceOwner": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5", "recipientWallet": "FVBk7NDMnzBXEZJQ5U4HZp9nVQYjPUzuyxv76JAK8EK5", "fundingStrategy": "direct_orchestration", "hops": 7, "arrivalSeconds": 300, "pricingTier": "standard", "percentFeeBps": 5, "percentFeeRaw": "49975", "totalFlatFeeLamports": 0, "recipientReceivesRaw": "99950025", "status": "quote", "isTest": true, "quotedAt": "2026-07-01T10:32:12.382Z", "completedAt": null, "expiresAt": "2026-07-01T11:02:12.381Z"
+
+=== (c) 2nd call (same key, DIFFERENT body) ===
+POST /transfers  HTTP 409
+Idempotency-Key: fixed-key-c-1782901884
+request body.externalId: idem-c2-1782901884-9de8e6  amountRaw: 200000000
+response: {"error": {"code": "MH_071", "message": "Idempotency-Key reused with a different request body", "requestId": "b5e42d4c-4a83-4038-3c05-c59a7214a786"}}
+
+[c-result] id1=523 id2=None  status1=200 status2=409
+[c-verdict] CONFLICT/REJECTED (same key, different body)
+
+============================================================
+SUMMARY
+============================================================
+(a) missing key        -> HTTP 400, id=None
+(b) same key+body x2   -> id1=522 id2=522 status=200/200 suppressed=True
+(c) same key+diff body -> id1=523 id2=None status=200/409 conflict=True
